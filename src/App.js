@@ -7,19 +7,21 @@ import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import  { useField } from './hooks/index'
 import notificationReducer from './reducers/notificationReducer'
-import {createMessage} from './reducers/notificationReducer'
+import { createMessage } from './reducers/notificationReducer'
 import { createStore } from 'redux'
 
-const store = createStore(counterReducer)
+const store = createStore(notificationReducer)
+console.log('STORE AFTER CREATION!!!!!!!', store.getState())
 
 
-const Notification = ({ notification }) => {
-  if (notification.message === null) {
+const Notification = () => {
+  console.log('STORE!!!!!!!', store.getState())
+  if (store.getState().message === null) {
     return null
   }
 
   const style = {
-    color: notification.type === 'error' ? 'red' : 'green',
+    color: store.kind === 'error' ? 'red' : 'green',
     background: 'Orange',
     fontSize: 20,
     borderStyle: 'solid',
@@ -30,7 +32,7 @@ const Notification = ({ notification }) => {
 
   return (
     <div style={style}>
-      {notification.message}
+      {store.getState().message}
     </div>
   )
 }
@@ -39,10 +41,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newLikes, setNewLikes] = useState(0)
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState({
-    message: null
-  })
-
+  
 
   useEffect(() => {
     const getAll = async () => {
@@ -50,7 +49,7 @@ const App = () => {
         const blogs = await blogService.getAll()
         setBlogs( sortBlogs(blogs) )
       } catch(exception) {
-        notify('something is wrong insied useEffect getting blogs')
+        notify('error', 'something is wrong inside useEffect getting blogs')
       }
     }
     getAll()
@@ -66,15 +65,15 @@ const App = () => {
   }, [])
 
   const username = useField('text')
-  const password = useField('password')
+  const password = useField('password') 
   const newTitle = useField('text')
   const newUrl = useField('text')
   const newAuthor = useField('text')
 
 
-  const notify = (message, type='success') => {
-    setNotification({ message, type })
-    setTimeout(() => setNotification({ message: null }), 5000)
+  const notify = (kind , message) => {
+    store.dispatch(createMessage( kind, message))
+    setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
   }
 
   const handleLogin = async (event) => {
@@ -90,7 +89,7 @@ const App = () => {
       await blogService.setToken(user.token)
       setUser(user)
     } catch (exception) {
-      notify('wrong username or password')
+      notify('error', 'wrong username or password')
     }
   }
 
@@ -108,13 +107,13 @@ const App = () => {
       await blogService.create(blogObject)
       const renewedBlogs = await blogService.getAll()
       setBlogs(sortBlogs(renewedBlogs))
-      notify(`a new blog ${newTitle.value} by ${newAuthor.value} added`)
+      notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
       newTitle.reset()
       newAuthor.reset()
       newUrl.reset()
       setNewLikes('')
     } catch(exception) {
-      notify('some problems with blog addition')
+      notify('error','some problems with blog addition')
     }
   }
 
@@ -136,7 +135,7 @@ const App = () => {
       setBlogs(sortBlogs(renewedBlogs))
 
     } catch (exception) {
-      notify('something is wrong with updates due to likes handling')
+      notify('error','something is wrong with updates due to likes handling')
     }
 
   }
@@ -150,10 +149,10 @@ const App = () => {
         console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
         setBlogs(sortBlogs(renewedBlogs))
-        notify('the blog is deleted')
+        notify('success','the blog is deleted')
       }
     } catch (exception) {
-      notify('something is wrong with deliting of the blog')
+      notify('error', 'something is wrong with deliting of the blog')
     }
   }
 
@@ -170,7 +169,7 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
 
-        <Notification notification={notification} />
+        <Notification />
 
         <Togglable buttonLabel='login'>
           <LoginForm
@@ -189,7 +188,7 @@ const App = () => {
       ---
       <h2>blogs</h2>
 
-      <Notification notification={notification} />
+      <Notification store={store} />
 
       <p>{user.name} logged in</p>
       <div>

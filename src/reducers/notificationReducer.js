@@ -1,5 +1,5 @@
 
-const initialState ={ type: 'success',message:null }
+const initialState = { kind: 'success', message:null }
 
 const notificationReducer = (state = initialState, action) => {
   console.log('state filter ', state)
@@ -7,17 +7,17 @@ const notificationReducer = (state = initialState, action) => {
 
   switch (action.type) {
   case 'SET_MESSAGE':
-    return action.message
+    return action.data
   default:
     return state
   }
 }
 
 
-export const  createMessage = (message) => {
+export const  createMessage = (kind, message) => {
   return {
     type: 'SET_MESSAGE',
-    message
+    data:{ kind:kind, message:message }
   }
 }
 
