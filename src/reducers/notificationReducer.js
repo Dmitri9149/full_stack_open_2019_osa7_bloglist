@@ -1,5 +1,5 @@
 
-const initialState ={ type: 'success',message:'' }
+const initialState ={ type: 'success',message:null }
 
 const notificationReducer = (state = initialState, action) => {
   console.log('state filter ', state)

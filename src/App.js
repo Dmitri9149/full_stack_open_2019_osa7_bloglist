@@ -8,6 +8,10 @@ import BlogForm from './components/BlogForm'
 import  { useField } from './hooks/index'
 import notificationReducer from './reducers/notificationReducer'
 import {createMessage} from './reducers/notificationReducer'
+import { createStore } from 'redux'
+
+const store = createStore(counterReducer)
+
 
 const Notification = ({ notification }) => {
   if (notification.message === null) {
