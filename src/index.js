@@ -2,11 +2,22 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import notificationReducer from './reducers/notificationReducer'
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
+import blogService from './services/blogs'
 
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
 
-const store = createStore(notificationReducer)
+const reducer = combineReducers({
+  blogs: blogReducer,
+  notification: notificationReducer,
+})
+
+const store = createStore(reducer)
+
+blogService.getAll().then(blogs =>
+  store.dispatch(initializeBlogs(blogs))
+)
+
 
 const renderApp = () => {
   ReactDOM.render(
