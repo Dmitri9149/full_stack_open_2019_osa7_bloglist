@@ -170,7 +170,7 @@ const App = (props) => {
       <div>
         <h2>Log in to application</h2>
 
-        <Notification />
+        <Notification store = {store}/>
 
         <Togglable buttonLabel='login'>
           <LoginForm
