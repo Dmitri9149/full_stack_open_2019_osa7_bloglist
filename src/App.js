@@ -5,41 +5,20 @@ import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import Notification from './components/Notification'
 import  { useField } from './hooks/index'
 import { createMessage } from './reducers/notificationReducer'
 
 
-const Notification = (props) => {
-  const store = props.store
-  console.log('STORE!!!!!!!', store.getState())
-  if (store.getState().message === null) {
-    return null
-  }
-
-  const style = {
-    color: store.kind === 'error' ? 'red' : 'green',
-    background: 'Orange',
-    fontSize: 20,
-    borderStyle: 'solid',
-    borderRadius: 2,
-    padding: 10,
-    marginBottom: 10,
-  }
-
-  return (
-    <div style={style}>
-      {store.getState().message}
-    </div>
-  )
-}
 
 const App = (props) => {
 
   const store = props.store
+  
   const [blogs, setBlogs] = useState([])
   const [newLikes, setNewLikes] = useState(0)
   const [user, setUser] = useState(null)
-  
+
 
   useEffect(() => {
     const getAll = async () => {

@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import notificationReducer from './reducers/notificationReducer'
-import { createMessage } from './reducers/notificationReducer'
 import { createStore } from 'redux'
+
+import blogReducer, { initializeBlogs } from './reducers/blogReducer'
 
 const store = createStore(notificationReducer)
 
