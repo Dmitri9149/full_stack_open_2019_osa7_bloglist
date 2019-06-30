@@ -14,23 +14,12 @@ import { createMessage } from './reducers/notificationReducer'
 const App = (props) => {
 
   const store = props.store
-  
+
   const [blogs, setBlogs] = useState([])
   const [newLikes, setNewLikes] = useState(0)
   const [user, setUser] = useState(null)
 
 
-  useEffect(() => {
-    const getAll = async () => {
-      try {
-        const blogs = await blogService.getAll()
-        setBlogs( sortBlogs(blogs) )
-      } catch(exception) {
-        notify('error', 'something is wrong inside useEffect getting blogs')
-      }
-    }
-    getAll()
-  }, [])
 
   useEffect(() => {
 

@@ -1,9 +1,10 @@
 import React from 'react'
 
 const Notification = (props) => {
-  const store = props.store
-  console.log('STORE!!!!!!!', store.getState())
-  if (store.getState().message === null) {
+  const { notification, blogs } = props.store.getState()
+  const store = props.store.getState()
+  console.log('STORE!!!!!!!', notification)
+  if (notification.message === null) {
     return null
   }
 
@@ -19,7 +20,7 @@ const Notification = (props) => {
 
   return (
     <div style={style}>
-      {store.getState().message}
+      {notification.message}
     </div>
   )
 }
