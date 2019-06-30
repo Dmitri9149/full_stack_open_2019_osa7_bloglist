@@ -6,15 +6,11 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import  { useField } from './hooks/index'
-import notificationReducer from './reducers/notificationReducer'
 import { createMessage } from './reducers/notificationReducer'
-import { createStore } from 'redux'
-
-const store = createStore(notificationReducer)
-console.log('STORE AFTER CREATION!!!!!!!', store.getState())
 
 
-const Notification = () => {
+const Notification = (props) => {
+  const store = props.store
   console.log('STORE!!!!!!!', store.getState())
   if (store.getState().message === null) {
     return null
@@ -37,7 +33,9 @@ const Notification = () => {
   )
 }
 
-const App = () => {
+const App = (props) => {
+
+  const store = props.store
   const [blogs, setBlogs] = useState([])
   const [newLikes, setNewLikes] = useState(0)
   const [user, setUser] = useState(null)
