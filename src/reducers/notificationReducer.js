@@ -2,8 +2,8 @@
 const initialState = { kind: 'success', message:null }
 
 const notificationReducer = (state = initialState, action) => {
-  console.log('state filter ', state)
-  console.log('action filter', action)
+  console.log('state in notificationReducer ', state)
+  console.log('action notificationREducer', action)
 
   switch (action.type) {
   case 'SET_MESSAGE':

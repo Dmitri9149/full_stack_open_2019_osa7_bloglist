@@ -72,8 +72,11 @@ const App = () => {
 
 
   const notify = (kind , message) => {
+    console.log('notify, before store.dispatch', store.getState())
     store.dispatch(createMessage( kind, message))
+    console.log('notify, after store.dispatch', store.getState())
     setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
+    console.log('notify, after setTimeout', store.getState())
   }
 
   const handleLogin = async (event) => {
