@@ -13,9 +13,14 @@ import { createMessage } from './reducers/notificationReducer'
 
 const App = (props) => {
 
-  const store = props.store
+  const  blogs = props.store.getState().blogs
+  console.log('blogs at the App beginnis', blogs)
 
-  const [blogs, setBlogs] = useState([])
+  const store = props.store
+  console.log('App at the beginning store.getState()', store.getState())
+
+
+  const [blogs1, setBlogs1] = useState([])
   const [newLikes, setNewLikes] = useState(0)
   const [user, setUser] = useState(null)
 
@@ -75,7 +80,7 @@ const App = (props) => {
 
       await blogService.create(blogObject)
       const renewedBlogs = await blogService.getAll()
-      setBlogs(sortBlogs(renewedBlogs))
+      setBlogs1(sortBlogs(renewedBlogs))
       notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
       newTitle.reset()
       newAuthor.reset()
@@ -101,7 +106,7 @@ const App = (props) => {
 
       await blogService.update(id, changedBlog)
       const renewedBlogs = await blogService.getAll()
-      setBlogs(sortBlogs(renewedBlogs))
+      setBlogs1(sortBlogs(renewedBlogs))
 
     } catch (exception) {
       notify('error','something is wrong with updates due to likes handling')
@@ -112,12 +117,12 @@ const App = (props) => {
   const deleteBlogOf = async (id) => {
     try {
       console.log('id -------------->', id)
-      const blog = blogs.find(blog => blog.id === id)
+      const blog = blogs1.find(blog => blog.id === id)
       if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
         const res = await blogService.del(id)
         console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
-        setBlogs(sortBlogs(renewedBlogs))
+        setBlogs1(sortBlogs(renewedBlogs))
         notify('success','the blog is deleted')
       }
     } catch (exception) {
@@ -195,5 +200,6 @@ const App = (props) => {
     </div>
   )
 }
+
 
 export default App

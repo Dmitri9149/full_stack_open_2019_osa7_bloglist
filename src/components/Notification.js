@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Notification = (props) => {
-  const { notification, blogs } = props.store.getState()
+  const notification = props.store.getState().notification
   const store = props.store.getState()
   console.log('STORE!!!!!!!', notification)
   if (notification.message === null) {

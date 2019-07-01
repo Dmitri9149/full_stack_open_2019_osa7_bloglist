@@ -14,16 +14,18 @@ const reducer = combineReducers({
 
 const store = createStore(reducer)
 
-blogService.getAll().then(blogs =>
-  store.dispatch(initializeBlogs(blogs))
+console.log('store created')
+
+
+blogService.getAll().then(blogs => {
+  console.log('blogService.getAll()')
+  store.dispatch(initializeBlogs(blogs))}
 )
 
 
+
 const renderApp = () => {
-  ReactDOM.render(
-    <App store={store}/>,
-    document.getElementById('root')
-  )
+  ReactDOM.render(<App store = {store}/>, document.getElementById('root'))
 }
 
 renderApp()
