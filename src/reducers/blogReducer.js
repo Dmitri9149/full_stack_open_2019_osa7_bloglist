@@ -1,10 +1,13 @@
+/* eslint-disable no-case-declarations */
 const blogReducer = (state = [], action) => {
   console.log('ACTION:', action)
   switch (action.type) {
   case 'NEW_BLOG':
     return [...state, action.data]
   case 'INIT_BLOGS':
-    return action.data
+    const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
+    return sortBlogs(action.data)
+
   default:
     return state
   }
@@ -16,5 +19,6 @@ export const initializeBlogs = (blogs) => {
     data: blogs,
   }
 }
+
 
 export default blogReducer

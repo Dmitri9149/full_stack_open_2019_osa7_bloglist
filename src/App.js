@@ -9,6 +9,7 @@ import Notification from './components/Notification'
 import  { useField } from './hooks/index'
 import { createMessage } from './reducers/notificationReducer'
 import { createUser, setNull } from './reducers/userReducer'
+import { initializeBlogs  } from './reducers/blogReducer'
 
 
 
@@ -99,11 +100,16 @@ const App = (props) => {
         user:blog.user.id
       }
 
+      console.log('changed Blog', changedBlog)
+
       const id = blog.id
 
       await blogService.update(id, changedBlog)
       const renewedBlogs = await blogService.getAll()
-      setBlogs1(sortBlogs(renewedBlogs))
+      console.log('renewedBlogs', renewedBlogs)
+      store.dispatch(initializeBlogs(renewedBlogs))
+
+      console.log('blogs1', blogs1)
 
     } catch (exception) {
       notify('error','something is wrong with updates due to likes handling')
@@ -114,12 +120,12 @@ const App = (props) => {
   const deleteBlogOf = async (id) => {
     try {
       console.log('id -------------->', id)
-      const blog = blogs1.find(blog => blog.id === id)
+      const blog = blogs.find(blog => blog.id === id)
       if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
         const res = await blogService.del(id)
         console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
-        setBlogs1(sortBlogs(renewedBlogs))
+        store.dispatch(initializeBlogs(renewedBlogs))
         notify('success','the blog is deleted')
       }
     } catch (exception) {
