@@ -24,6 +24,8 @@ const App = (props) => {
   const [newLikes, setNewLikes] = useState(0)
   const [user, setUser] = useState(null)
 
+  console.log ('what user is ?', user)
+
 
 
   useEffect(() => {
