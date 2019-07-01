@@ -1,5 +1,5 @@
 import loginService from './services/login'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
@@ -8,12 +8,15 @@ import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import  { useField } from './hooks/index'
 import { createMessage } from './reducers/notificationReducer'
+import { createUser, setNull } from './reducers/userReducer'
+
 
 
 
 const App = (props) => {
 
   const  blogs = props.store.getState().blogs
+  const user = props.store.getState().user
   console.log('blogs at the App beginnis', blogs)
 
   const store = props.store
@@ -22,20 +25,12 @@ const App = (props) => {
 
   const [blogs1, setBlogs1] = useState([])
   const [newLikes, setNewLikes] = useState(0)
-  const [user, setUser] = useState(null)
 
   console.log ('what user is ?', user)
 
 
 
-  useEffect(() => {
 
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-    }
-  }, [])
 
   const username = useField('text')
   const password = useField('password') 
@@ -63,7 +58,7 @@ const App = (props) => {
       console.log('user...........', user)
 
       await blogService.setToken(user.token)
-      setUser(user)
+      store.dispatch(createUser(user.username, user.name))
     } catch (exception) {
       notify('error', 'wrong username or password')
     }
@@ -169,7 +164,7 @@ const App = (props) => {
       <p>{user.name} logged in</p>
       <div>
         <button onClick = {() => {
-          setUser(null)
+          store.dispatch(setNull())
           username.reset()
           password.reset()
           blogService.setToken(null)

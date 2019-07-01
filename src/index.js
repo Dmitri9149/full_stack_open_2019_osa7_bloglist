@@ -6,10 +6,12 @@ import { createStore, combineReducers } from 'redux'
 import blogService from './services/blogs'
 
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
+import userReducer from './reducers/userReducer'
 
 const reducer = combineReducers({
   blogs: blogReducer,
   notification: notificationReducer,
+  user:userReducer
 })
 
 const store = createStore(reducer)
