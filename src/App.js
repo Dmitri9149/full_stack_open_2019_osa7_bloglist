@@ -21,11 +21,7 @@ const App = (props) => {
   console.log('blogs at the App beginnis', blogs)
 
   const store = props.store
-  console.log('App at the beginning store.getState()', store.getState())
 
-
-  const [blogs1, setBlogs1] = useState([])
-  const [newLikes, setNewLikes] = useState(0)
 
   console.log ('what user is ?', user)
 
@@ -34,18 +30,15 @@ const App = (props) => {
 
 
   const username = useField('text')
-  const password = useField('password') 
+  const password = useField('password')
   const newTitle = useField('text')
   const newUrl = useField('text')
   const newAuthor = useField('text')
 
 
   const notify = (kind , message) => {
-    console.log('notify, before store.dispatch', store.getState())
     store.dispatch(createMessage( kind, message))
-    console.log('notify, after store.dispatch', store.getState())
     setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
-    console.log('notify, after setTimeout', store.getState())
   }
 
   const handleLogin = async (event) => {
@@ -73,17 +66,16 @@ const App = (props) => {
         author: newAuthor.value,
         title: newTitle.value,
         url:newUrl.value,
-        likes:newLikes
+        likes:0
       }
 
       await blogService.create(blogObject)
       const renewedBlogs = await blogService.getAll()
-      setBlogs1(sortBlogs(renewedBlogs))
+      store.dispatch(initializeBlogs(renewedBlogs))
       notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
       newTitle.reset()
       newAuthor.reset()
       newUrl.reset()
-      setNewLikes('')
     } catch(exception) {
       notify('error','some problems with blog addition')
     }
@@ -109,7 +101,6 @@ const App = (props) => {
       console.log('renewedBlogs', renewedBlogs)
       store.dispatch(initializeBlogs(renewedBlogs))
 
-      console.log('blogs1', blogs1)
 
     } catch (exception) {
       notify('error','something is wrong with updates due to likes handling')
@@ -133,8 +124,6 @@ const App = (props) => {
     }
   }
 
-
-  const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
 
   const determineWhenVisible =  (blog, user) => {
     const condition = (blog.user.username === user.username)

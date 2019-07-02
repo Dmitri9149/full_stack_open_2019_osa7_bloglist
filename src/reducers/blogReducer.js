@@ -2,8 +2,6 @@
 const blogReducer = (state = [], action) => {
   console.log('ACTION:', action)
   switch (action.type) {
-  case 'NEW_BLOG':
-    return [...state, action.data]
   case 'INIT_BLOGS':
     const sortBlogs = (blogs) => blogs.sort((b,a) => (a.likes-b.likes))
     return sortBlogs(action.data)
@@ -19,6 +17,7 @@ export const initializeBlogs = (blogs) => {
     data: blogs,
   }
 }
+
 
 
 export default blogReducer
