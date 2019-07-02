@@ -1,17 +1,15 @@
-import loginService from './services/login'
+
 import React from 'react'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
-import { createUser, setNull } from './reducers/userReducer'
-import  { useField } from './hooks/index'
+import { setNull } from './reducers/userReducer'
 import { createMessage } from './reducers/notificationReducer'
 import { initializeBlogs  } from './reducers/blogReducer'
-
-
+import blogService from './services/blogs'
+import  { useField } from './hooks/index'
 
 
 const App = (props) => {
@@ -29,23 +27,6 @@ const App = (props) => {
   const notify = (kind , message) => {
     store.dispatch(createMessage( kind, message))
     setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
-  }
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-
-      const user = await loginService.login({
-        username:username.value, password:password.value
-      })
-
-      console.log('user...........', user)
-
-      await blogService.setToken(user.token)
-      store.dispatch(createUser(user.username, user.name))
-    } catch (exception) {
-      notify('error', 'wrong username or password')
-    }
   }
 
 
@@ -105,12 +86,7 @@ const App = (props) => {
         <Notification store = {store}/>
 
         <Togglable buttonLabel='login'>
-          <LoginForm
-            username ={username}
-            password = {password}
-
-            handleSubmit={handleLogin}
-          />
+          <LoginForm store = {store} />
         </Togglable>
       </div>
     )
