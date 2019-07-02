@@ -1,13 +1,11 @@
 
 import React from 'react'
-import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import { setNull } from './reducers/userReducer'
-import { createMessage } from './reducers/notificationReducer'
-import { initializeBlogs  } from './reducers/blogReducer'
 import blogService from './services/blogs'
 import  { useField } from './hooks/index'
 
@@ -24,59 +22,6 @@ const App = (props) => {
   const password = useField('password')
 
 
-  const notify = (kind , message) => {
-    store.dispatch(createMessage( kind, message))
-    setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
-  }
-
-
-
-  const handleLikesOf = async (blog) => {
-    try {
-
-      const changedBlog = {
-        title:blog.title,
-        author:blog.author,
-        url:blog.url,
-        likes:blog.likes +1,
-        user:blog.user.id
-      }
-
-      const id = blog.id
-
-      await blogService.update(id, changedBlog)
-      const renewedBlogs = await blogService.getAll()
-      console.log('renewedBlogs', renewedBlogs)
-      store.dispatch(initializeBlogs(renewedBlogs))
-
-
-    } catch (exception) {
-      notify('error','something is wrong with updates due to likes handling')
-    }
-
-  }
-
-
-  const deleteBlogOf = async (id) => {
-    try {
-      const blog = blogs.find(blog => blog.id === id)
-      if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
-        const res = await blogService.del(id)
-        console.log('after delete method', res)
-        const renewedBlogs = await blogService.getAll()
-        store.dispatch(initializeBlogs(renewedBlogs))
-        notify('success','the blog is deleted')
-      }
-    } catch (exception) {
-      notify('error', 'something is wrong with deliting of the blog')
-    }
-  }
-
-
-  const determineWhenVisible =  (blog, user) => {
-    const condition = (blog.user.username === user.username)
-    return { display: condition ? '' : 'none' }
-  }
 
   if (user === null) {
     return (
@@ -111,24 +56,13 @@ const App = (props) => {
         logout
         </button>
       </div>
+
       <h2>New Blog</h2>
       <Togglable buttonLabel="new blog">
-        <BlogForm
-          store = {store}
-        />
+        <BlogForm store = {store} />
       </Togglable>
-      <div>
-
-      </div>
-      {blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          handleLikes = {() => handleLikesOf(blog)}
-          deleteBlog = {() => deleteBlogOf(blog.id)}
-          displayOrNot = {determineWhenVisible(blog, user)}
-        />
-      )}
+      <Blogs store = {store} />
+      
     </div>
   )
 }

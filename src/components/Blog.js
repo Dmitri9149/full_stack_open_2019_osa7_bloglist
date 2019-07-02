@@ -1,9 +1,60 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import blogService from '../services/blogs'
+import { createMessage } from '../reducers/notificationReducer'
+import { initializeBlogs  } from '../reducers/blogReducer'
+
+
+const Blog = ( { store, user,  blog } ) => {
+
+
+  const notify = (kind , message) => {
+    store.dispatch(createMessage( kind, message))
+    setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
+  }
+
+  const deleteBlogOf = async () => {
+    try {
+      if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
+        const res = await blogService.del(blog.id)
+        console.log('after delete method', res)
+        const renewedBlogs = await blogService.getAll()
+        store.dispatch(initializeBlogs(renewedBlogs))
+        notify('success','the blog is deleted')
+      }
+    } catch (exception) {
+      notify('error', 'something is wrong with deliting of the blog')
+    }
+  }
+
+  const handleLikesOf = async (blog) => {
+    try {
+
+      const changedBlog = {
+        title:blog.title,
+        author:blog.author,
+        url:blog.url,
+        likes:blog.likes +1,
+        user:blog.user.id
+      }
+      const id = blog.id
+
+      await blogService.update(id, changedBlog)
+      const renewedBlogs = await blogService.getAll()
+      console.log('renewedBlogs', renewedBlogs)
+      store.dispatch(initializeBlogs(renewedBlogs))
+    } catch (exception) {
+      notify('error','something is wrong with updates due to likes handling')
+    }
+  }
+
+  const determineWhenVisible =  (blog, user) => {
+    const condition = (blog.user.username === user.username)
+    return { display: condition ? '' : 'none' }
+  }
 
 
 
-const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
   const [loginVisible, setLoginVisible] = useState(true)
   const blogStyle = {
     paddingTop: 10,
@@ -14,10 +65,7 @@ const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
   }
 
   Blog.propTypes = {
-    blog: PropTypes.object.isRequired,
-    handleLikes: PropTypes.func.isRequired,
-    deleteBlog: PropTypes.func.isRequired,
-    displayOrNot:PropTypes.object.isRequired
+    blog: PropTypes.object.isRequired
   }
 
 
@@ -48,7 +96,7 @@ const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
               &ensp;
               likes
               &ensp;
-            <button onClick = {handleLikes}>
+            <button onClick = {() => handleLikesOf(blog)}>
                 like
             </button>
           </p>
@@ -59,10 +107,10 @@ const Blog = ({ blog, handleLikes, deleteBlog, displayOrNot }) => {
             {blog.user.name}
               &ensp;
           </p>
-          <div style = {displayOrNot } >
+          <div style = {determineWhenVisible(blog, user)} >
             <p>
                 &ensp;
-              <button  onClick = {deleteBlog}>
+              <button  onClick = {() => deleteBlogOf(blog.id)}>
                   remove
               </button>
             </p>
