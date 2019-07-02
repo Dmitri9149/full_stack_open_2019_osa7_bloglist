@@ -1,13 +1,12 @@
 
 import React from 'react'
-import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
-import { setNull } from './reducers/userReducer'
-import blogService from './services/blogs'
-import  { useField } from './hooks/index'
+import Logout from './components/Logout'
+import Blogs from './components/Blogs'
+
 
 
 const App = (props) => {
@@ -18,8 +17,7 @@ const App = (props) => {
 
   const store = props.store
 
-  const username = useField('text')
-  const password = useField('password')
+
 
 
 
@@ -45,24 +43,12 @@ const App = (props) => {
       <Notification store={store} />
 
       <p>{user.name} logged in</p>
-      <div>
-        <button onClick = {() => {
-          store.dispatch(setNull())
-          username.reset()
-          password.reset()
-          blogService.setToken(null)
-        }}
-        >
-        logout
-        </button>
-      </div>
+      <Logout store = {store} />
 
       <h2>New Blog</h2>
       <Togglable buttonLabel="new blog">
         <BlogForm store = {store} />
       </Togglable>
-      <Blogs store = {store} />
-      
     </div>
   )
 }
