@@ -7,10 +7,12 @@ const Logout = ({ store }) => {
 
   const username = useField('text')
   const password = useField('password')
+  const user = store.getState().user
 
   return(
 
     <div>
+      <p>{user.name} logged in</p>
       <button onClick = {() => {
         store.dispatch(setNull())
         username.reset()

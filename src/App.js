@@ -17,10 +17,6 @@ const App = (props) => {
 
   const store = props.store
 
-
-
-
-
   if (user === null) {
     return (
       <div>
@@ -41,14 +37,13 @@ const App = (props) => {
       <h2>blogs</h2>
 
       <Notification store={store} />
-
-      <p>{user.name} logged in</p>
       <Logout store = {store} />
 
       <h2>New Blog</h2>
       <Togglable buttonLabel="new blog">
         <BlogForm store = {store} />
       </Togglable>
+      <Blogs store = {store} />
     </div>
   )
 }
