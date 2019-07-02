@@ -22,13 +22,6 @@ const App = (props) => {
 
   const store = props.store
 
-
-  console.log ('what user is ?', user)
-
-
-
-
-
   const username = useField('text')
   const password = useField('password')
   const newTitle = useField('text')
@@ -81,6 +74,7 @@ const App = (props) => {
     }
   }
 
+
   const handleLikesOf = async (blog) => {
     try {
 
@@ -91,8 +85,6 @@ const App = (props) => {
         likes:blog.likes +1,
         user:blog.user.id
       }
-
-      console.log('changed Blog', changedBlog)
 
       const id = blog.id
 
@@ -108,9 +100,9 @@ const App = (props) => {
 
   }
 
+
   const deleteBlogOf = async (id) => {
     try {
-      console.log('id -------------->', id)
       const blog = blogs.find(blog => blog.id === id)
       if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
         const res = await blogService.del(id)
