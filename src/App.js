@@ -1,14 +1,14 @@
 import loginService from './services/login'
-import React, { useState } from 'react'
+import React from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
+import { createUser, setNull } from './reducers/userReducer'
 import  { useField } from './hooks/index'
 import { createMessage } from './reducers/notificationReducer'
-import { createUser, setNull } from './reducers/userReducer'
 import { initializeBlogs  } from './reducers/blogReducer'
 
 
@@ -24,9 +24,6 @@ const App = (props) => {
 
   const username = useField('text')
   const password = useField('password')
-  const newTitle = useField('text')
-  const newUrl = useField('text')
-  const newAuthor = useField('text')
 
 
   const notify = (kind , message) => {
@@ -51,28 +48,6 @@ const App = (props) => {
     }
   }
 
-  const addBlog = async (event) => {
-    try {
-      event.preventDefault()
-
-      const blogObject = {
-        author: newAuthor.value,
-        title: newTitle.value,
-        url:newUrl.value,
-        likes:0
-      }
-
-      await blogService.create(blogObject)
-      const renewedBlogs = await blogService.getAll()
-      store.dispatch(initializeBlogs(renewedBlogs))
-      notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
-      newTitle.reset()
-      newAuthor.reset()
-      newUrl.reset()
-    } catch(exception) {
-      notify('error','some problems with blog addition')
-    }
-  }
 
 
   const handleLikesOf = async (blog) => {
@@ -163,10 +138,7 @@ const App = (props) => {
       <h2>New Blog</h2>
       <Togglable buttonLabel="new blog">
         <BlogForm
-          addBlog={addBlog}
-          newTitle={newTitle}
-          newUrl={newUrl}
-          newAuthor = { newAuthor }
+          store = {store}
         />
       </Togglable>
       <div>
