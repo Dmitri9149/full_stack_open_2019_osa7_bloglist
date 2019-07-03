@@ -4,6 +4,8 @@ import blogService from '../services/blogs'
 import { initializeBlogs  } from '../reducers/blogReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
+import { initializeUsers  } from '../reducers/usersReducer'
+import usersService from '../services/users'
 
 
 
@@ -33,7 +35,9 @@ const BlogForm = (props) => {
 
       await blogService.create(blogObject)
       const renewedBlogs = await blogService.getAll()
+      const renewedUsers = await usersService.getAllUsers()
       props.initializeBlogs(renewedBlogs)
+      props.initializeUsers(renewedUsers)
       notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
       newTitle.reset()
       newAuthor.reset()
@@ -78,7 +82,8 @@ const BlogForm = (props) => {
 
 const mapDispatchToProps = {
   createMessage,
-  initializeBlogs
+  initializeBlogs,
+  initializeUsers
 }
 
 // eksportoidaan suoraan connectin palauttama komponentti

@@ -2,8 +2,8 @@ import React from 'react'
 import Blog from './Blog'
 import { connect } from 'react-redux'
 import { initializeBlogs  } from '../reducers/blogReducer'
+import { initializeUsers  } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
-
 
 
 const Blogs = (props) => {
@@ -21,6 +21,7 @@ const Blogs = (props) => {
           user = {user}
           createMessage = {props.createMessage}
           initializeBlogs = {props.initializeBlogs}
+          initializeUsers = {props.initializeUsers}
         />
       )}
     </div>
@@ -39,7 +40,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   createMessage,
-  initializeBlogs
+  initializeBlogs,
+  initializeUsers
 }
 
 

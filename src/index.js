@@ -7,8 +7,9 @@ import blogService from './services/blogs'
 import { Provider } from 'react-redux'
 
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
+import usersReducer, { initializeUsers } from './reducers/usersReducer'
 import userReducer from './reducers/userReducer'
-import usersReducer from './reducers/usersReducer'
+import usersService from './services/users'
 
 
 const reducer = combineReducers({
@@ -27,6 +28,12 @@ blogService.getAll().then(blogs => {
   console.log('blogService.getAll()')
   store.dispatch(initializeBlogs(blogs))}
 )
+
+usersService.getAllUsers().then(users => {
+  console.log('usersService.getAllUsers()', users)
+  store.dispatch(initializeUsers(users))}
+)
+
 
 
 const renderApp = () => {

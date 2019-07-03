@@ -10,7 +10,7 @@ const usersReducer = (state = [], action) => {
   }
 }
 
-export const initializeBlogs = (users) => {
+export const initializeUsers = (users) => {
   return {
     type: 'INIT_USERS',
     data: users

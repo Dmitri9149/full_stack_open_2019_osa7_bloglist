@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
+import usersService from '../services/users'
 
-const Blog = ({ blog, user, createMessage, initializeBlogs  }) => {
+
+
+const Blog = ({ blog, user, createMessage, initializeBlogs, initializeUsers  }) => {
 
 
   const notify = (kind , message) => {
@@ -16,7 +19,9 @@ const Blog = ({ blog, user, createMessage, initializeBlogs  }) => {
         const res = await blogService.del(blog.id)
         console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
+        const renewedUsers = await usersService.getAllUsers()
         initializeBlogs(renewedBlogs)
+        initializeUsers(renewedUsers)
         notify('success','the blog is deleted')
       }
     } catch (exception) {
