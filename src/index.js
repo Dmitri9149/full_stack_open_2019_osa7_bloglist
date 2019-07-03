@@ -8,11 +8,14 @@ import { Provider } from 'react-redux'
 
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
 import userReducer from './reducers/userReducer'
+import usersReducer from './reducers/usersReducer'
+
 
 const reducer = combineReducers({
   blogs: blogReducer,
   notification: notificationReducer,
-  user:userReducer
+  user:userReducer,
+  users:usersReducer
 })
 
 const store = createStore(reducer)
@@ -24,7 +27,6 @@ blogService.getAll().then(blogs => {
   console.log('blogService.getAll()')
   store.dispatch(initializeBlogs(blogs))}
 )
-
 
 
 const renderApp = () => {
