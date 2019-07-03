@@ -11,6 +11,9 @@ const Logout = (props) => {
   const username = useField('text')
   const password = useField('password')
   const user = props.user
+  const users = props.users
+
+  console.log('logout users', users)
 
   return(
 
@@ -29,14 +32,15 @@ const Logout = (props) => {
         <h2>
           Users
         </h2>
+        <ul>
         {
           users.map(user =>
             <li key ={user.id}>
               user.name
             </li>
-            
-            )
+          )
         }
+        </ul>
 
       </div>
     </div>
@@ -46,7 +50,8 @@ const Logout = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    blogs:state.blogs
+    blogs:state.blogs,
+    users:state.users
   }
 }
 
