@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+
 
 const Togglable = (props) => {
   const [visible, setVisible] = useState(false)
@@ -23,4 +25,14 @@ const Togglable = (props) => {
   )
 }
 
-export default Togglable
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  mapStateToProps
+)(Togglable)

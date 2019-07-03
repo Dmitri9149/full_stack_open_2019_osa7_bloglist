@@ -4,6 +4,7 @@ import App from './App'
 import notificationReducer from './reducers/notificationReducer'
 import { createStore, combineReducers } from 'redux'
 import blogService from './services/blogs'
+import { Provider } from 'react-redux'
 
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
 import userReducer from './reducers/userReducer'
@@ -27,7 +28,11 @@ blogService.getAll().then(blogs => {
 
 
 const renderApp = () => {
-  ReactDOM.render(<App store = {store}/>, document.getElementById('root'))
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root'))
 }
 
 renderApp()

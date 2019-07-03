@@ -3,21 +3,21 @@ import  { useField } from '../hooks/index'
 import blogService from '../services/blogs'
 import { initializeBlogs  } from '../reducers/blogReducer'
 import { createMessage } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
+
 
 
 
 
 const BlogForm = (props) => {
 
-  const store = props.store
-
   const newTitle = useField('text')
   const newUrl = useField('text')
   const newAuthor = useField('text')
 
   const notify = (kind , message) => {
-    store.dispatch(createMessage( kind, message))
-    setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
+    props.createMessage( kind, message)
+    setTimeout(() => props.createMessage('success', null ), 5000)
   }
 
   const addBlog = async (event) => {
@@ -33,7 +33,7 @@ const BlogForm = (props) => {
 
       await blogService.create(blogObject)
       const renewedBlogs = await blogService.getAll()
-      store.dispatch(initializeBlogs(renewedBlogs))
+      props.initializeBlogs(renewedBlogs)
       notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
       newTitle.reset()
       newAuthor.reset()
@@ -74,4 +74,15 @@ const BlogForm = (props) => {
       </form>
     </div>
   )}
-export default BlogForm
+
+
+const mapDispatchToProps = {
+  createMessage,
+  initializeBlogs
+}
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  null,
+  mapDispatchToProps
+)(BlogForm)

@@ -1,11 +1,13 @@
 import React from 'react'
 import Blog from './Blog'
+import { connect } from 'react-redux'
 
 
-const Blogs = ({ store }) => {
-  const blogs = store.getState().blogs
-  const user = store.getState().user
 
+const Blogs = (props) => {
+
+  const blogs = props.blogs
+  const user = props.user
   console.log('Blogs', blogs)
   console.log('Blogs, user', user)
   return (
@@ -13,9 +15,7 @@ const Blogs = ({ store }) => {
       {blogs.map(blog =>
         <Blog
           key={blog.id}
-          store = {store}
           blog={blog}
-          user = {user}
         />
       )}
     </div>
@@ -24,4 +24,18 @@ const Blogs = ({ store }) => {
 
 }
 
-export default Blogs
+
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs,
+    user: state.user
+  }
+}
+
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  mapStateToProps,
+  null
+)(Blogs)
+

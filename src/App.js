@@ -6,26 +6,23 @@ import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Logout from './components/Logout'
 import Blogs from './components/Blogs'
+import { connect } from 'react-redux'
 
 
 
 const App = (props) => {
 
-  const  blogs = props.store.getState().blogs
-  const user = props.store.getState().user
-  console.log('blogs at the App beginnis', blogs)
 
-  const store = props.store
-
-  if (user === null) {
+  if (props.user === null) {
+    
     return (
       <div>
         <h2>Log in to application</h2>
 
-        <Notification store = {store}/>
+        <Notification/>
 
         <Togglable buttonLabel='login'>
-          <LoginForm store = {store} />
+          <LoginForm/>
         </Togglable>
       </div>
     )
@@ -36,17 +33,27 @@ const App = (props) => {
       ---
       <h2>blogs</h2>
 
-      <Notification store={store} />
-      <Logout store = {store} />
+      <Notification/>
+      <Logout/>
 
       <h2>New Blog</h2>
       <Togglable buttonLabel="new blog">
-        <BlogForm store = {store} />
+        <BlogForm />
       </Togglable>
-      <Blogs store = {store} />
+      <Blogs />
     </div>
   )
 }
 
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  mapStateToProps
+)(App)

@@ -2,19 +2,22 @@ import React from 'react'
 import  { useField } from '../hooks/index'
 import { setNull } from '../reducers/userReducer'
 import blogService from '../services/blogs'
+import { connect } from 'react-redux'
 
-const Logout = ({ store }) => {
+
+
+const Logout = (props) => {
 
   const username = useField('text')
   const password = useField('password')
-  const user = store.getState().user
+  const user = props.user
 
   return(
 
     <div>
       <p>{user.name} logged in</p>
       <button onClick = {() => {
-        store.dispatch(setNull())
+        props.setNull()
         username.reset()
         password.reset()
         blogService.setToken(null)
@@ -26,4 +29,19 @@ const Logout = ({ store }) => {
   )
 }
 
-export default Logout
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+
+const mapDispatchToProps = {
+  setNull
+}
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Logout)

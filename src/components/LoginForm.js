@@ -4,17 +4,16 @@ import { createMessage } from '../reducers/notificationReducer'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 import { createUser } from '../reducers/userReducer'
+import { connect } from 'react-redux'
 
 const LoginForm = (props) => {
-
-  const store = props.store
 
   const username = useField('text')
   const password = useField('password')
 
   const notify = (kind , message) => {
-    store.dispatch(createMessage( kind, message))
-    setTimeout(() => store.dispatch(createMessage('success', null )), 5000)
+    props.createMessage( kind, message)
+    setTimeout(() => props.createMessage('success', null ), 5000)
   }
 
   const handleLogin = async (event) => {
@@ -26,7 +25,7 @@ const LoginForm = (props) => {
       })
 
       await blogService.setToken(user.token)
-      store.dispatch(createUser(user.username, user.name))
+      props.createUser(user.username, user.name)
     } catch (exception) {
       notify('error', 'wrong username or password')
     }
@@ -60,4 +59,19 @@ const LoginForm = (props) => {
 
 }
 
-export default LoginForm
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  createMessage,
+  createUser
+}
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm)

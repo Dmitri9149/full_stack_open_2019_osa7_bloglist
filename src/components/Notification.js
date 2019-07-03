@@ -1,15 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 const Notification = (props) => {
-  const notification = props.store.getState().notification
-  const store = props.store.getState()
-  console.log('STORE!!!!!!!', notification)
-  if (notification.message === null) {
+
+  if (props.notification.message === null) {
     return null
   }
 
   const style = {
-    color: store.kind === 'error' ? 'red' : 'green',
+    color: props.notification.kind === 'error' ? 'red' : 'green',
     background: 'Orange',
     fontSize: 20,
     borderStyle: 'solid',
@@ -20,9 +19,20 @@ const Notification = (props) => {
 
   return (
     <div style={style}>
-      {notification.message}
+      {props.notification.message}
     </div>
   )
 }
 
-export default Notification
+const mapStateToProps = (state) => {
+  return {
+    notification: state.notification
+  }
+}
+
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(
+  mapStateToProps,
+  null
+)(Notification)
