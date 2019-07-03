@@ -25,13 +25,28 @@ const Logout = (props) => {
       >
         logout
       </button>
+      <div>
+        <h2>
+          Users
+        </h2>
+        {
+          users.map(user =>
+            <li key ={user.id}>
+              user.name
+            </li>
+            
+            )
+        }
+
+      </div>
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    blogs:state.blogs
   }
 }
 
