@@ -14,13 +14,10 @@ const App = (props) => {
 
 
   if (props.user === null) {
-    
     return (
       <div>
         <h2>Log in to application</h2>
-
         <Notification/>
-
         <Togglable buttonLabel='login'>
           <LoginForm/>
         </Togglable>
@@ -32,7 +29,6 @@ const App = (props) => {
     <div>
       ---
       <h2>blogs</h2>
-
       <Notification/>
       <Logout/>
 
@@ -55,5 +51,6 @@ const mapStateToProps = (state) => {
 
 // eksportoidaan suoraan connectin palauttama komponentti
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  null
 )(App)

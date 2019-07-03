@@ -1,6 +1,8 @@
 import React from 'react'
 import Blog from './Blog'
 import { connect } from 'react-redux'
+import { initializeBlogs  } from '../reducers/blogReducer'
+import { createMessage } from '../reducers/notificationReducer'
 
 
 
@@ -16,6 +18,9 @@ const Blogs = (props) => {
         <Blog
           key={blog.id}
           blog={blog}
+          user = {user}
+          createMessage = {props.createMessage}
+          initializeBlogs = {props.initializeBlogs}
         />
       )}
     </div>
@@ -32,10 +37,15 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  createMessage,
+  initializeBlogs
+}
+
 
 // eksportoidaan suoraan connectin palauttama komponentti
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Blogs)
 

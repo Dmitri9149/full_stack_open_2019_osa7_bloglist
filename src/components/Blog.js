@@ -1,19 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
-import { connect } from 'react-redux'
-import { initializeBlogs  } from '../reducers/blogReducer'
-import { createMessage } from '../reducers/notificationReducer'
 
-
-
-
-const Blog = (props, { blog }) => {
+const Blog = ({ blog, user, createMessage, initializeBlogs  }) => {
 
 
   const notify = (kind , message) => {
-    props.createMessage( kind, message)
-    setTimeout(() => props.createMessage('success', null ), 5000)
+    createMessage( kind, message)
+    setTimeout(() => createMessage('success', null ), 5000)
   }
 
   const deleteBlogOf = async () => {
@@ -22,7 +16,7 @@ const Blog = (props, { blog }) => {
         const res = await blogService.del(blog.id)
         console.log('after delete method', res)
         const renewedBlogs = await blogService.getAll()
-        props.initializeBlogs(renewedBlogs)
+        initializeBlogs(renewedBlogs)
         notify('success','the blog is deleted')
       }
     } catch (exception) {
@@ -45,7 +39,7 @@ const Blog = (props, { blog }) => {
       await blogService.update(id, changedBlog)
       const renewedBlogs = await blogService.getAll()
       console.log('renewedBlogs', renewedBlogs)
-      props.initializeBlogs(renewedBlogs)
+      initializeBlogs(renewedBlogs)
     } catch (exception) {
       notify('error','something is wrong with updates due to likes handling')
     }
@@ -110,7 +104,7 @@ const Blog = (props, { blog }) => {
             {blog.user.name}
               &ensp;
           </p>
-          <div style = {determineWhenVisible(blog, props.user)} >
+          <div style = {determineWhenVisible(blog, user )} >
             <p>
                 &ensp;
               <button  onClick = {() => deleteBlogOf(blog.id)}>
@@ -126,20 +120,5 @@ const Blog = (props, { blog }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  }
-}
 
-
-const mapDispatchToProps = {
-  createMessage,
-  initializeBlogs
-}
-
-// eksportoidaan suoraan connectin palauttama komponentti
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Blog)
+export default Blog
