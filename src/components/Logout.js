@@ -28,43 +28,6 @@ const Logout = (props) => {
       >
         logout
       </button>
-      <div>
-        <h2>
-          Users
-        </h2>
-
-        <table>
-          <tbody>
-            <tr>
-              <th>
-              </th>
-              <th>
-              blogs created
-              </th>
-            </tr>
-            {
-              users.map(user =>
-                <tr key = { user.id}>
-                  <td>
-                    <li key ={user.id}>
-                      {user.name}
-                    </li>
-                  </td>
-                  <td>
-                    <li key ={user.id}>
-                      {user.blogs.length}
-                    </li>
-                  </td>
-                </tr>
-              )
-            }
-          </tbody>
-        </table>
-
-
-
-
-      </div>
     </div>
   )
 }
