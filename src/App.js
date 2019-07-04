@@ -7,6 +7,7 @@ import Notification from './components/Notification'
 import Logout from './components/Logout'
 import Blogs from './components/Blogs'
 import { connect } from 'react-redux'
+import Users from './components/Users'
 
 
 
@@ -31,6 +32,7 @@ const App = (props) => {
       <h2>blogs</h2>
       <Notification/>
       <Logout/>
+      <Users/>
 
       <h2>New Blog</h2>
       <Togglable buttonLabel="new blog">

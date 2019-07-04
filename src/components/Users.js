@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import blogService from '../services/blogs'
-import usersService from '../services/users'
 import { connect } from 'react-redux'
+import { setUserOfInterest, setNullOfInterest   } from '../reducers/userOfInterestReducer'
 
 
 
 
 const Users = (props) => {
-
 
 
 
@@ -29,46 +27,67 @@ const Users = (props) => {
   return (
     <div style = {blogStyle}>
       <div style = {showPartly}>
-        <div >
-          <div>
-            <h2> Users </h2>
-            <table>
-              <tbody>
-                <tr>
-                  <th>
-                  </th>
-                  <th>
+        <div>
+          <h2> Users </h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                </th>
+                <th>
               blogs created
-                  </th>
-                </tr>
-                {
-                  props.users.map(user =>
-                    <tr key = { user.id}>
-                      <td>
-                        <li key ={user.id}  onClick={() => setLoginVisible(false)}>
-                          {user.name}
-                        </li>
-                      </td>
-                      <td>
-                        <li key ={user.id} >
-                          {user.blogs.length}
-                        </li>
-                      </td>
-                    </tr>
-                  )
-                }
-              </tbody>
-            </table>
-          </div>
+                </th>
+              </tr>
+              {
+                props.users.map(user =>
+                  <tr key = { user.id}>
+                    <td>
+                      <li key ={user.id}  onClick={() =>
+                      {
+                        props.setUserOfInterest(user)
+                        return(setLoginVisible(false))
+                      }
+                      }>
+                        {user.name}
+                      </li>
+                    </td>
+                    <td>
+                      <li key ={user.id} >
+                        {user.blogs.length}
+                      </li>
+                    </td>
+                  </tr>
+                )
+              }
+            </tbody>
+          </table>
         </div>
       </div>
 
       <div style = {showAll}>
-        <div onClick={() => setLoginVisible(true)}>
-          somethig additional happens
+        <div onClick={() =>
+        {
+          props.setNullOfInterest()
+          return(setLoginVisible(true))
+        }
+        }>
+          <h2>
+            {console.log('Users user ', props.userOfInterest)}
+            {props.userOfInterest === null ? '' : props.userOfInterest.name}
+          </h2>
+          <h4>
+            added blogs
+          </h4>
+          {
+            props.userOfInterest === null
+              ? ''
+              :props.userOfInterest.blogs.map(
+                blog => <li key = {blog.id}>
+                  {blog.title}
+                </li>
+              )
+          }
         </div>
-
-
       </div>
 
     </div>
@@ -79,13 +98,19 @@ const Users = (props) => {
 const mapStateToProps = (state) => {
   return {
     blogs:state.blogs,
+    userOfInterest:state.userOfInterest,
     users:state.users
   }
+}
+
+const mapDispatchToProps = {
+  setUserOfInterest,
+  setNullOfInterest
 }
 
 
 // eksportoidaan suoraan connectin palauttama komponentti
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Users)

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
 import usersReducer, { initializeUsers } from './reducers/usersReducer'
+import userOfInterestReducer from './reducers/userOfInterestReducer'
 import userReducer from './reducers/userReducer'
 import usersService from './services/users'
 
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   blogs: blogReducer,
   notification: notificationReducer,
   user:userReducer,
-  users:usersReducer
+  users:usersReducer,
+  userOfInterest:userOfInterestReducer
 })
 
 const store = createStore(reducer)
