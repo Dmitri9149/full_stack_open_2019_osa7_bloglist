@@ -14,7 +14,7 @@ const blogReducer = (state = [], action) => {
 export const initializeBlogs = (blogs) => {
   return {
     type: 'INIT_BLOGS',
-    data: blogs,
+    data: blogs
   }
 }
 
