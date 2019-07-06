@@ -18,6 +18,7 @@ import Blog from './components/Blog'
 
 const App = (props) => {
   const user = props.user
+  const blogs = props.blogs
 
   const padding = { padding: 5 }
 
@@ -43,19 +44,19 @@ const App = (props) => {
             <div>
               <h2>Log in to application</h2>
               <Notification/>
-              <Togglable buttonLabel='login'>
-                <LoginForm/>
-              </Togglable>
             </div>
           }/>
           <Route exact path="/blogs" render={() =>
-            <div>
-              <h2>New Blog</h2>
-              <Togglable buttonLabel="new blog">
-                <BlogForm />
-              </Togglable>
-              <Blogs />
-            </div>
+            user
+              ?
+              <div>
+                <h2>New Blog</h2>
+                <Togglable buttonLabel="new blog">
+                  <BlogForm />
+                </Togglable>
+                <Blogs />
+              </div>
+              :<Redirect to="/login" />
 
           } />
           <Route exact path="/blogs/:id" render={({ match }) =>
@@ -77,7 +78,8 @@ const App = (props) => {
 
           <Route path="/login" render={() =>
             <div>
-              <LoginForm />
+              <Notification/>
+              <LoginForm/>
             </div>
           }
           />
