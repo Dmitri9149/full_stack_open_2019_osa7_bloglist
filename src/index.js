@@ -6,6 +6,7 @@ import { createStore, combineReducers } from 'redux'
 import blogService from './services/blogs'
 import { Provider } from 'react-redux'
 
+
 import blogReducer, { initializeBlogs } from './reducers/blogReducer'
 import usersReducer, { initializeUsers } from './reducers/usersReducer'
 import userOfInterestReducer from './reducers/userOfInterestReducer'
@@ -41,7 +42,7 @@ usersService.getAllUsers().then(users => {
 const renderApp = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <App store = {store}/>
     </Provider>,
     document.getElementById('root'))
 }

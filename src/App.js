@@ -1,4 +1,7 @@
-
+import {
+  BrowserRouter as Router,
+  Route, Link, Redirect, withRouter
+} from 'react-router-dom'
 import React from 'react'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
@@ -8,45 +11,89 @@ import Logout from './components/Logout'
 import Blogs from './components/Blogs'
 import { connect } from 'react-redux'
 import Users from './components/Users'
+import Blog from './components/Blog'
+
 
 
 
 const App = (props) => {
+  const user = props.user
 
+  const padding = { padding: 5 }
 
-  if (props.user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
-        <Notification/>
-        <Togglable buttonLabel='login'>
-          <LoginForm/>
-        </Togglable>
-      </div>
-    )
-  }
+  const blogById = (id) =>
+    props.blogs.find(blog => blog.id === Number(id))
+
 
   return (
     <div>
-      ---
-      <h2>blogs</h2>
-      <Notification/>
-      <Logout/>
-      <Users/>
+      <Router>
+        <div>
+          <div>
+            <Link style={padding} to="/">home</Link>
+            <Link style={padding} to="/blogs">blogs</Link>
+            <Link style={padding} to="/users">users</Link>
+            {user
+              ? <em> {user.name} logged in </em>
+              : <Link to="/login">login</Link>
+            }
+          </div>
 
-      <h2>New Blog</h2>
-      <Togglable buttonLabel="new blog">
-        <BlogForm />
-      </Togglable>
-      <Blogs />
+          <Route exact path="/" render={() =>
+            <div>
+              <h2>Log in to application</h2>
+              <Notification/>
+              <Togglable buttonLabel='login'>
+                <LoginForm/>
+              </Togglable>
+            </div>
+          }/>
+          <Route exact path="/blogs" render={() =>
+            <div>
+              <h2>New Blog</h2>
+              <Togglable buttonLabel="new blog">
+                <BlogForm />
+              </Togglable>
+              <Blogs />
+            </div>
+
+          } />
+          <Route exact path="/blogs/:id" render={({ match }) =>
+            <Blog blog={blogById(match.params.id)} />}
+          />
+          <Route path="/users" render={() =>
+            user
+              ?
+              <div>
+                {console.log('props.user', user)}
+                <h2>blogs</h2>
+                <Notification/>
+                <Logout/>
+                <Users/>
+              </div>
+
+              : <Redirect to="/login" />
+          } />
+
+          <Route path="/login" render={() =>
+            <div>
+              <LoginForm />
+            </div>
+          }
+          />
+
+
+        </div>
+      </Router>
     </div>
   )
-}
 
+}
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    blogs:state.blogs
   }
 }
 

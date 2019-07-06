@@ -42,14 +42,14 @@ const LoginForm = (props) => {
           käyttäjätunnus
           <input
             {...username}
-            reset = '*'
+            reset = ''
           />
         </div>
         <div>
           salasana
           <input
             {...password}
-            reset ='*'
+            reset =''
           />
         </div>
         <button type="submit">kirjaudu</button>
