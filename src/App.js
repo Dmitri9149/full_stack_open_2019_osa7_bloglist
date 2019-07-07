@@ -1,6 +1,6 @@
 import {
   BrowserRouter as Router,
-  Route, Link, Redirect, withRouter
+  Route, Link, Redirect
 } from 'react-router-dom'
 import React from 'react'
 import LoginForm from './components/LoginForm'
@@ -38,11 +38,12 @@ const App = (props) => {
               ? <em> {user.name} logged in </em>
               : <Link to="/login">login</Link>
             }
+            <Link style={padding} to="/logout">logout</Link>
           </div>
 
           <Route exact path="/" render={() =>
             <div>
-              <h2>Log in to application</h2>
+              <h2>Log in to or continue with the application</h2>
               <Notification/>
             </div>
           }/>
@@ -66,7 +67,6 @@ const App = (props) => {
             user
               ?
               <div>
-                {console.log('props.user', user)}
                 <h2>blogs</h2>
                 <Notification/>
                 <Logout/>
@@ -80,11 +80,19 @@ const App = (props) => {
             <div>
               <Notification/>
               <LoginForm/>
+
             </div>
           }
           />
-
-
+          <Route path="/logout" render={() =>
+            user
+              ?
+              <div>
+                <Notification/>
+                <Logout/>
+              </div>
+              :<Redirect to="/" />
+          } />
         </div>
       </Router>
     </div>
