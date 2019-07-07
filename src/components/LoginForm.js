@@ -35,24 +35,24 @@ const LoginForm = (props) => {
 
   return (
     <div>
-      <h2>Kirjaudu</h2>
+      <h2>login</h2>
 
       <form onSubmit={handleLogin}>
         <div>
-          käyttäjätunnus
+          username
           <input
             {...username}
             reset = ''
           />
         </div>
         <div>
-          salasana
+          password
           <input
             {...password}
             reset =''
           />
         </div>
-        <button type="submit">kirjaudu</button>
+        <button type="submit">login</button>
       </form>
     </div>
   )
