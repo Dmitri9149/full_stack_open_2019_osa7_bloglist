@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { initializeBlogs  } from '../reducers/blogReducer'
 import { initializeUsers  } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
+import { Link } from 'react-router-dom'
 
 
 const Blogs = (props) => {
@@ -14,16 +15,20 @@ const Blogs = (props) => {
   console.log('Blogs, user', user)
   return (
     <div>
-      {blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          user = {user}
-          createMessage = {props.createMessage}
-          initializeBlogs = {props.initializeBlogs}
-          initializeUsers = {props.initializeUsers}
-        />
-      )}
+      <ul>
+        {blogs.map(blog =>
+          <li key = {blog.id}>
+            <Blog
+              blog={blog}
+              user = {user}
+              createMessage = {props.createMessage}
+              initializeBlogs = {props.initializeBlogs}
+              initializeUsers = {props.initializeUsers}
+            />
+            <Link to={`/blogs/${blog.id}`}>{blog.title}    {blog.author} </Link>
+          </li>
+        )}
+      </ul>
     </div>
   )
 

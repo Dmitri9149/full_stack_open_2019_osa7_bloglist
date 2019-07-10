@@ -16,6 +16,7 @@ import blogsService from './services/blogs'
 import { initializeBlogs } from './reducers/blogReducer'
 import usersService from './services/users'
 import { initializeUsers } from './reducers/usersReducer'
+import { createMessage } from './reducers/notificationReducer'
 
 
 
@@ -31,8 +32,6 @@ const App = (props) => {
       .getAll().then(users => props.initializeUsers(users))
   },[])
 
-  const user = props.user
-  const blogs = props.blogs
 
   const padding = { padding: 5 }
 
@@ -52,8 +51,8 @@ const App = (props) => {
             <Link style={padding} to="/">home</Link>
             <Link style={padding} to="/blogs">blogs</Link>
             <Link style={padding} to="/users">users</Link>
-            {user
-              ? <em> {user.name} logged in </em>
+            {props.user
+              ? <em> {props.user.name} logged in </em>
               : <Link to="/login">login</Link>
             }
             <Link style={padding} to="/logout">logout</Link>
@@ -65,7 +64,7 @@ const App = (props) => {
             </div>
           }/>
           <Route exact path="/blogs" render={() =>
-            user
+            props.user
               ?
               <div>
                 <h2>New Blog</h2>
@@ -84,9 +83,8 @@ const App = (props) => {
             <div>
               <Notification/>
               <Blog
-                key = {blogById(match.params.id).id}
                 blog={blogById(match.params.id)}
-                user = {user}
+                user = {props.user}
                 createMessage = {props.createMessage}
                 initializeBlogs = {props.initializeBlogs}
                 initializeUsers = {props.initializeUsers}
@@ -95,7 +93,7 @@ const App = (props) => {
           }/>
 
           <Route path="/users" render={() =>
-            user
+            props.user
               ?
               <div>
                 <h2>blogs</h2>
@@ -115,7 +113,7 @@ const App = (props) => {
           }
           />
           <Route path="/logout" render={() =>
-            user
+            props.user
               ?
               <div>
                 <Logout/>
@@ -138,7 +136,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   initializeBlogs,
-  initializeUsers
+  initializeUsers,
+  createMessage
 }
 
 
