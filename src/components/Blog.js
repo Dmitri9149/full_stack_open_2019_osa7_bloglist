@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import blogService from '../services/blogs'
+import blogsService from '../services/blogs'
 import usersService from '../services/users'
 
 
@@ -16,10 +16,11 @@ const Blog = ({ blog, user, createMessage, initializeBlogs, initializeUsers  }) 
   const deleteBlogOf = async () => {
     try {
       if (window.confirm(`Poistetaanko   "${blog.title}"  ?`)) {
-        const res = await blogService.del(blog.id)
+        console.log('blog.id', blog.id)
+        const res = await blogsService.del(blog.id)
         console.log('after delete method', res)
-        const renewedBlogs = await blogService.getAll()
-        const renewedUsers = await usersService.getAllUsers()
+        const renewedBlogs = await blogsService.getAll()
+        const renewedUsers = await usersService.getAll()
         initializeBlogs(renewedBlogs)
         initializeUsers(renewedUsers)
         notify('success','the blog is deleted')
@@ -41,8 +42,8 @@ const Blog = ({ blog, user, createMessage, initializeBlogs, initializeUsers  }) 
       }
       const id = blog.id
 
-      await blogService.update(id, changedBlog)
-      const renewedBlogs = await blogService.getAll()
+      await blogsService.update(id, changedBlog)
+      const renewedBlogs = await blogsService.getAll()
       console.log('renewedBlogs', renewedBlogs)
       initializeBlogs(renewedBlogs)
     } catch (exception) {

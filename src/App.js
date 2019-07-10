@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Route, Link, Redirect
 } from 'react-router-dom'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
@@ -12,17 +12,36 @@ import Blogs from './components/Blogs'
 import { connect } from 'react-redux'
 import Users from './components/Users'
 import Blog from './components/Blog'
+import blogsService from './services/blogs'
+import { initializeBlogs } from './reducers/blogReducer'
+import usersService from './services/users'
+import { initializeUsers } from './reducers/usersReducer'
 
 
 
 
 const App = (props) => {
+  useEffect(() => {
+    blogsService
+      .getAll().then(blogs => props.initializeBlogs(blogs))
+  },[])
+
+  useEffect(() => {
+    usersService
+      .getAll().then(users => props.initializeUsers(users))
+  },[])
+
   const user = props.user
+  const blogs = props.blogs
 
   const padding = { padding: 5 }
 
-  const blogById = (id) =>
-    props.blogs.find(blog => blog.id === Number(id))
+  const blogById = (id) => {
+    console.log( props.blogs.find(blog => blog.id === id))
+    return(
+      props.blogs.find(blog => blog.id === id)
+    )
+  }
 
 
   return (
@@ -59,9 +78,22 @@ const App = (props) => {
               :<Redirect to="/login" />
 
           } />
-          <Route exact path="/blogs/:id" render={({ match }) =>
-            <Blog blog={blogById(match.params.id)} />}
-          />
+
+          <Route path="/blogs/:id" render={({ match }) =>
+
+            <div>
+              <Notification/>
+              <Blog
+                key = {blogById(match.params.id).id}
+                blog={blogById(match.params.id)}
+                user = {user}
+                createMessage = {props.createMessage}
+                initializeBlogs = {props.initializeBlogs}
+                initializeUsers = {props.initializeUsers}
+              />
+            </div>
+          }/>
+
           <Route path="/users" render={() =>
             user
               ?
@@ -104,9 +136,19 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  initializeBlogs,
+  initializeUsers
+}
+
 
 // eksportoidaan suoraan connectin palauttama komponentti
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(App)
+
+
+
+
+

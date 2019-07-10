@@ -2,7 +2,7 @@ import React from 'react'
 import  { useField } from '../hooks/index'
 import { createMessage } from '../reducers/notificationReducer'
 import loginService from '../services/login'
-import blogService from '../services/blogs'
+import blogsService from '../services/blogs'
 import { createUser } from '../reducers/userReducer'
 import { connect } from 'react-redux'
 
@@ -24,7 +24,7 @@ const LoginForm = (props) => {
         username:username.value, password:password.value
       })
 
-      await blogService.setToken(user.token)
+      await blogsService.setToken(user.token)
       props.createUser(user.username, user.name)
     } catch (exception) {
       notify('error', 'wrong username or password')

@@ -1,7 +1,7 @@
 import React from 'react'
 import  { useField } from '../hooks/index'
 import { setNull } from '../reducers/userReducer'
-import blogService from '../services/blogs'
+import blogsService from '../services/blogs'
 import { connect } from 'react-redux'
 
 
@@ -23,7 +23,7 @@ const Logout = (props) => {
         props.setNull()
         username.reset()
         password.reset()
-        blogService.setToken(null)
+        blogsService.setToken(null)
       }}
       >
         logout

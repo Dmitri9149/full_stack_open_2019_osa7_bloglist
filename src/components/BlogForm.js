@@ -1,6 +1,6 @@
 import React from 'react'
 import  { useField } from '../hooks/index'
-import blogService from '../services/blogs'
+import blogsService from '../services/blogs'
 import { initializeBlogs  } from '../reducers/blogReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
@@ -33,9 +33,9 @@ const BlogForm = (props) => {
         likes:0
       }
 
-      await blogService.create(blogObject)
-      const renewedBlogs = await blogService.getAll()
-      const renewedUsers = await usersService.getAllUsers()
+      await blogsService.create(blogObject)
+      const renewedBlogs = await blogsService.getAll()
+      const renewedUsers = await usersService.getAll()
       props.initializeBlogs(renewedBlogs)
       props.initializeUsers(renewedUsers)
       notify('success', `a new blog ${newTitle.value} by ${newAuthor.value} added`)
