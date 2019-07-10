@@ -5,6 +5,7 @@ import { initializeBlogs  } from '../reducers/blogReducer'
 import { initializeUsers  } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
+import BlogSimple from './BlogSimple'
 
 
 const Blogs = (props) => {
@@ -18,13 +19,6 @@ const Blogs = (props) => {
       <ul>
         {blogs.map(blog =>
           <li key = {blog.id}>
-            <Blog
-              blog={blog}
-              user = {user}
-              createMessage = {props.createMessage}
-              initializeBlogs = {props.initializeBlogs}
-              initializeUsers = {props.initializeUsers}
-            />
             <Link to={`/blogs/${blog.id}`}>{blog.title}    {blog.author} </Link>
           </li>
         )}
