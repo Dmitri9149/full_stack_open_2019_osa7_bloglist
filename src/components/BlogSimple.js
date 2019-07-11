@@ -11,6 +11,18 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
     return (null)
   }
 
+
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
+
+
+
+
   const notify = (kind , message) => {
     createMessage( kind, message)
     setTimeout(() => createMessage('success', null ), 5000)
@@ -57,14 +69,10 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
   }
 
   return (
-    <div>
-      <div>
-        {blog.title} {blog.author}
-      </div>
-
-      <div>
-        { blog.url}
-      </div>
+    <div style = {blogStyle}>
+      <h2>{blog.title}</h2>
+      <div>{blog.author}</div>
+      <div>{ blog.url}</div>
 
       <div>
         <p>

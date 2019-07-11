@@ -17,6 +17,7 @@ import { initializeBlogs } from './reducers/blogReducer'
 import usersService from './services/users'
 import { initializeUsers } from './reducers/usersReducer'
 import { createMessage } from './reducers/notificationReducer'
+import BlogSimple from './components/BlogSimple'
 
 
 
@@ -82,9 +83,8 @@ const App = (props) => {
 
             <div>
               <Notification/>
-              <Blog
+              <BlogSimple
                 blog={blogById(match.params.id)}
-                user = {props.user}
                 createMessage = {props.createMessage}
                 initializeBlogs = {props.initializeBlogs}
                 initializeUsers = {props.initializeUsers}
