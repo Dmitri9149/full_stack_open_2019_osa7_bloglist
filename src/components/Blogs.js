@@ -1,11 +1,9 @@
 import React from 'react'
-import Blog from './Blog'
 import { connect } from 'react-redux'
 import { initializeBlogs  } from '../reducers/blogReducer'
 import { initializeUsers  } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
-import BlogSimple from './BlogSimple'
 
 
 const Blogs = (props) => {
