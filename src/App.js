@@ -17,6 +17,7 @@ import usersService from './services/users'
 import { initializeUsers } from './reducers/usersReducer'
 import { createMessage } from './reducers/notificationReducer'
 import BlogSimple from './components/BlogSimple'
+import CommentForm from './components/CommentForm'
 
 
 
@@ -84,10 +85,12 @@ const App = (props) => {
               <Notification/>
               <BlogSimple
                 blog={blogById(match.params.id)}
+                blogs = {props.blogs}
                 createMessage = {props.createMessage}
                 initializeBlogs = {props.initializeBlogs}
                 initializeUsers = {props.initializeUsers}
               />
+              <CommentForm id = {match.params.id}/>
             </div>
           }/>
 

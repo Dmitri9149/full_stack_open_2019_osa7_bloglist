@@ -4,7 +4,7 @@ import usersService from '../services/users'
 
 
 
-const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) => {
+const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUsers  }) => {
 
   if(blog === undefined) {
     return (null)
@@ -98,6 +98,9 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
                   remove
             </button>
           </p>
+        </div>
+        <div>
+            to be the comments
         </div>
       </div>
 
