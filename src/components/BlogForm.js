@@ -47,7 +47,6 @@ const BlogForm = (props) => {
     }
   }
 
-
   return(
     <div>
       <form onSubmit={addBlog}>
