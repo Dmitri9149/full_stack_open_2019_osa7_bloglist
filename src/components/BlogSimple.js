@@ -54,6 +54,7 @@ const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUse
         author:blog.author,
         url:blog.url,
         likes:blog.likes +1,
+        comments:blog.comments,
         user:blog.user.id
       }
       const id = blog.id

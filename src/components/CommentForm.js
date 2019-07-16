@@ -6,8 +6,6 @@ import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { initializeUsers  } from '../reducers/usersReducer'
 import usersService from '../services/users'
-import commentsService from '../services/comments'
-
 
 
 
@@ -21,27 +19,27 @@ const CommentForm = (props) => {
     setTimeout(() => props.createMessage('success', null ), 5000)
   }
 
-  const addComment = async (event) => {
-    try {
-      event.preventDefault()
 
-      const commentObject = {
-        content:newComment.value
+
+  const addComment = async (blog) => {
+    try {
+
+      const changedBlog = {
+        title:blog.title,
+        author:blog.author,
+        url:blog.url,
+        likes:blog.likes,
+        comments:blog.comments.concat({ content:newComment.value }),
+        user:blog.user.id
       }
-      console.log('we are in addComment')
-      console.log('id + commentObject', props.id, commentObject)
-      await commentsService.create(props.id, commentObject)
-      console.log('await comment Service')
+      const id = blog.id
+
+      await blogsService.update(id, changedBlog)
       const renewedBlogs = await blogsService.getAll()
-      const renewedUsers = await usersService.getAll()
-      const renewedComments = await commentsService.getAll(props.id)
-      console.log('renewedComments', renewedComments)
-      props.initializeBlogs(renewedBlogs)
-      props.initializeUsers(renewedUsers)
-      notify('success, a new comment is added')
-      newComment.reset()
-    } catch(exception) {
-      notify('error','some problems with comment addition')
+      console.log('renewedBlogs', renewedBlogs)
+      initializeBlogs(renewedBlogs)
+    } catch (exception) {
+      notify('error','something is wrong with adding of new comment')
     }
   }
 
@@ -65,7 +63,7 @@ const CommentForm = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    id:ownProps.id
+    blog:ownProps.blog
   }
 }
 
