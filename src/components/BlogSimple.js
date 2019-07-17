@@ -103,7 +103,7 @@ const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUse
         <div>
           <ul>
             {blog.comments.map(comment =>
-              <li key = {comment.id}>
+              <li key = {comment._id}>
                 {comment.content}
               </li>
             )}
