@@ -5,7 +5,6 @@ import { initializeBlogs  } from '../reducers/blogReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { initializeUsers  } from '../reducers/usersReducer'
-import usersService from '../services/users'
 
 
 
@@ -20,8 +19,10 @@ const CommentForm = (props) => {
   }
 
 
+  const blog = props.blog
 
-  const addComment = async (blog) => {
+  const addComment = async () => {
+    console.log('blog in addComment', blog)
     try {
 
       const changedBlog = {
