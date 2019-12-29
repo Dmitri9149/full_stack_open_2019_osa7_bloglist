@@ -1,6 +1,7 @@
 import React from 'react'
 import blogsService from '../services/blogs'
 import usersService from '../services/users'
+import CommentForm from './CommentForm'
 
 
 
@@ -91,10 +92,11 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
           <button  onClick = {() => deleteBlogOf(blog.id)}>remove</button>
         </p>
         <ul>
-          {blog.comments.map(com =>
-            <li key = {com.id}>{com}</li>
-          )}
+          {blog.comments.map(com => <li key = {com.id}>{com}</li>)}
         </ul>
+        <hr />
+        <CommentForm blog={blog}/>
+        <hr />
       </div>
 
     </div>

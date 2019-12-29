@@ -90,7 +90,6 @@ const App = (props) => {
                 initializeBlogs = {props.initializeBlogs}
                 initializeUsers = {props.initializeUsers}
               />
-              <CommentForm blog={blogById(match.params.id)} createMessage = {props.createMessage}/>
             </div>
           }/>
 
