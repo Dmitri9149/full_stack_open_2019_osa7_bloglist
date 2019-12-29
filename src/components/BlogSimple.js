@@ -6,7 +6,7 @@ import { initializeUsers } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import CommentForm from './CommentForm'
-import Comments from './Comments'
+import BlogComments from './BlogComments'
 
 
 
@@ -102,7 +102,7 @@ const BlogSimple = props => {
         <hr />
         <CommentForm blog={blog}/>
         <hr />
-        <Comments blog = {blog}/>
+        <BlogComments blog = {blog}/>
         <hr/>
       </div>
 
