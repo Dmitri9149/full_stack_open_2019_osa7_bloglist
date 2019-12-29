@@ -42,43 +42,6 @@ const CommentForm = (props) => {
     }
   }
 
-//  const addComment = async (event) => {
-//   console.log('IN FUNCTION !!!!!!!!!')
-//    try {
-//      event.preventDefault()
-
-
-//      const changedBlog = {
-//        title:blog.title,
-//        author:blog.author,
-//        url:blog.url,
-//        likes:blog.likes,
-//        comments:blog.comments.concat({ content:newComment.value }),
-//        user:blog.user.id
-//      }
-
-//      const changedBlog = { ... blog,
-//        comments: [...blog.comments, newComment.value]
-
-//      }
-
-//      console.log(changedBlog.comments)
-//      const id = blog.id
-//      console.log('just before update')
-//      await blogsService.update(id, changedBlog)
-//      console.log('JUST AFTER AWAUIT!!!!!!!!!!!!')
-//      const renewedBlogs = await blogsService.getAll()
-//      const renewedUsers = await usersService.getAll()
-//      console.log('renewedBlogs', renewedBlogs)
-//      initializeBlogs(renewedBlogs)
-//      initializeUsers(renewedUsers)
-//      newComment.reset()
-//    } catch (exception) {
-//      notify('error','something is wrong with adding comment')
-//    }
-//  }  
-
-
   return(
     <div>
       <form onSubmit={addComment}>
@@ -95,12 +58,6 @@ const CommentForm = (props) => {
       </form>
     </div>
   )}
-
-//const mapStateToProps = (state, ownProps) => {
-//  return {
-//    blog:ownProps.blog
-//  }
-//}
 
 
 const mapDispatchToProps = {
