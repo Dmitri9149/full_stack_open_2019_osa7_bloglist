@@ -5,6 +5,7 @@ import loginService from '../services/login'
 import blogsService from '../services/blogs'
 import { createUser } from '../reducers/userReducer'
 import { connect } from 'react-redux'
+import { Form, Button, Header } from 'semantic-ui-react'
 
 const LoginForm = (props) => {
 
@@ -35,25 +36,19 @@ const LoginForm = (props) => {
 
   return (
     <div>
-      <h2>login</h2>
-
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            {...username}
-            reset = ''
-          />
-        </div>
-        <div>
-          password
-          <input
-            {...password}
-            reset =''
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <br/>
+      <Header as = 'h3' dividing>Login</Header>
+      <Form onSubmit={handleLogin}>
+        <Form.Field>
+          <label>username</label>
+          <input {...username} reset = ''/>
+        </Form.Field>
+        <Form.Field>
+          <label>password</label>
+          <input {...password} reset =''/>
+        </Form.Field>
+        <Button type="submit">login</Button>
+      </Form>
     </div>
   )
 
