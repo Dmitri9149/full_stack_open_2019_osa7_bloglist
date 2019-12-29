@@ -6,6 +6,7 @@ import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { initializeUsers  } from '../reducers/usersReducer'
 import usersService from '../services/users'
+import { Form, Button } from 'semantic-ui-react'
 
 
 
@@ -48,34 +49,21 @@ const BlogForm = (props) => {
   }
 
   return(
-    <div>
-      <form onSubmit={addBlog}>
-        <div>
-          title
-          <input
-            {...newTitle}
-            name= 'newtitle'
-            reset = '*'
-          />
-        </div>
-        <div>
-          author
-          <input
-            {...newAuthor}
-            reset = '*'
-          />
-        </div>
-        <div>
-          url
-          <input
-            {...newUrl}
-            reset ='*'
-          />
-        </div>
-
-        <button type="submit">create</button>
-      </form>
-    </div>
+    <Form onSubmit={addBlog}>
+      <Form.Field>
+        <label>title</label>
+        <input {...newTitle} name= 'newtitle' reset = '*' />
+      </Form.Field>
+      <Form.Field>
+        <label>author</label>
+        <input {...newAuthor} reset = '*' />
+      </Form.Field>
+      <Form.Field>
+        <label>url</label>
+        <input {...newUrl} reset ='*' />
+      </Form.Field>
+      <Button type="submit">create</Button>
+    </Form>
   )}
 
 

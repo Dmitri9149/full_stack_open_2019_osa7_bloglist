@@ -17,7 +17,7 @@ import usersService from './services/users'
 import { initializeUsers } from './reducers/usersReducer'
 import { createMessage } from './reducers/notificationReducer'
 import BlogSimple from './components/BlogSimple'
-import { Menu, Container } from 'semantic-ui-react'
+import { Menu, Container, Header } from 'semantic-ui-react'
 
 
 
@@ -71,7 +71,7 @@ const App = (props) => {
               props.user
                 ?
                 <div>
-                  <h2>New Blog</h2>
+                  <Header as = 'h2' dividing>New Blog</Header>
                   <Notification/>
                   <Togglable buttonLabel="new blog">
                     <BlogForm />

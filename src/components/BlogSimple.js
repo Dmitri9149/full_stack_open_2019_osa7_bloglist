@@ -7,6 +7,7 @@ import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import CommentForm from './CommentForm'
 import BlogComments from './BlogComments'
+import { Grid, Header, Button } from 'semantic-ui-react'
 
 
 
@@ -75,19 +76,25 @@ const BlogSimple = props => {
 
   return (
     <div style = {blogStyle}>
-      <h2>{blog.title}</h2>
+      <Header as = 'h2' dividing>Blog App</Header>
+      <Header as = 'h2' dividing>{blog.title}</Header>
       <div>{blog.author}</div>
       <div>{ blog.url}</div>
 
       <div>
-        <p>
-              &ensp;
-          {blog.likes}
-              &ensp;
+        <Grid columns = {3}>
+          <Grid.Row>
+            <Grid.Column>
+              {blog.likes}
+            </Grid.Column>
+            <Grid.Column>
               likes
-              &ensp;
-          <button onClick = {() => handleLikesOf(blog)}>like</button>
-        </p>
+            </Grid.Column>
+            <Grid.Column>
+              <Button onClick = {() => handleLikesOf(blog)}>like</Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
         <p>
               &ensp;
               added by

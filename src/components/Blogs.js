@@ -4,7 +4,7 @@ import { initializeBlogs  } from '../reducers/blogReducer'
 import { initializeUsers  } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
-
+import { Table, Header } from 'semantic-ui-react'
 
 const Blogs = (props) => {
 
@@ -14,18 +14,25 @@ const Blogs = (props) => {
   console.log('Blogs, user', user)
   return (
     <div>
-      <ul>
-        {blogs.map(blog =>
-          <li key = {blog.id}>
-            <Link to={`/blogs/${blog.id}`}>{blog.title}    {blog.author} </Link>
-          </li>
-        )}
-      </ul>
+      <Header as = 'h3' dividing>Blogs</Header>
+      <Table striped celled>
+        <Table.Body>
+          {blogs.map(blog =>
+            <Table.Row key = {blog.id}>
+              <Table.Cell>
+                <Link to={`/blogs/${blog.id}`}>
+                  {blog.title}
+                </Link>
+              </Table.Cell>
+              <Table.Cell>
+                {blog.author}
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Body>
+      </Table>
     </div>
-  )
-
-
-}
+  )}
 
 
 const mapStateToProps = (state) => {
