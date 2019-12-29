@@ -21,9 +21,10 @@ const CommentForm = (props) => {
 
   const blog = props.blog
 
-  const addComment = async () => {
+  const addComment = async (event) => {
     console.log('blog in addComment', blog)
     try {
+      event.prevent.default()
 
       const changedBlog = {
         title:blog.title,
