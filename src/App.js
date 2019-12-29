@@ -17,8 +17,6 @@ import usersService from './services/users'
 import { initializeUsers } from './reducers/usersReducer'
 import { createMessage } from './reducers/notificationReducer'
 import BlogSimple from './components/BlogSimple'
-import CommentForm from './components/CommentForm'
-
 
 
 
