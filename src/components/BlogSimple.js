@@ -4,12 +4,11 @@ import usersService from '../services/users'
 
 
 
-const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUsers  }) => {
+const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) => {
 
   if(blog === undefined) {
     return (null)
   }
-
 
   const blogStyle = {
     paddingTop: 10,
@@ -18,9 +17,6 @@ const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUse
     borderWidth: 1,
     marginBottom: 5
   }
-
-
-
 
   const notify = (kind , message) => {
     createMessage( kind, message)
@@ -81,9 +77,7 @@ const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUse
               &ensp;
               likes
               &ensp;
-          <button onClick = {() => handleLikesOf(blog)}>
-                like
-          </button>
+          <button onClick = {() => handleLikesOf(blog)}>like</button>
         </p>
         <p>
               &ensp;
@@ -92,21 +86,15 @@ const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUse
           {blog.user.name}
               &ensp;
         </p>
-        <div>
-          <p>
-                &ensp;
-            <button  onClick = {() => deleteBlogOf(blog.id)}>
-                  remove
-            </button>
-          </p>
-        </div>
-        <div>
-          <ul>
-            {blog.comments.map(com =>
-              <li key = {com.id}>{com}</li>
-            )}
-          </ul>
-        </div>
+        <p>
+              &ensp;
+          <button  onClick = {() => deleteBlogOf(blog.id)}>remove</button>
+        </p>
+        <ul>
+          {blog.comments.map(com =>
+            <li key = {com.id}>{com}</li>
+          )}
+        </ul>
       </div>
 
     </div>
