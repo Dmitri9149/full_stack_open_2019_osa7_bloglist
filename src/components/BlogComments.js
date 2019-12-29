@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const BlogComments = props => {
   return (
@@ -7,7 +7,7 @@ const BlogComments = props => {
       <ul>
         {
           props.blog.comments.length
-            ? props.blog.comments.map((comment, i) => <ListGroup.Item as="li" key={`${i}-comment`}>{comment}</ListGroup.Item>)
+            ? props.blog.comments.map((comment, i) => <li key={`${i}-comment`}>{comment}</li>)
             : <li>Still no comments!</li>
         }
       </ul>

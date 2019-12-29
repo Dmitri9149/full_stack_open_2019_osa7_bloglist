@@ -55,6 +55,7 @@ const App = (props) => {
               <h2>Log in to or continue with the application</h2>
             </div>
           }/>
+
           <Route exact path="/blogs" render={() =>
             props.user
               ?
@@ -74,9 +75,7 @@ const App = (props) => {
 
             <div>
               <Notification/>
-              <BlogSimple
-                blogId={match.params.id}
-              />
+              <BlogSimple blogId={match.params.id} />
             </div>
           }/>
 
@@ -96,10 +95,10 @@ const App = (props) => {
             <div>
               <Notification/>
               <LoginForm/>
-
             </div>
           }
           />
+
           <Route path="/logout" render={() =>
             props.user
               ?
@@ -112,7 +111,6 @@ const App = (props) => {
       </Router>
     </div>
   )
-
 }
 
 const mapStateToProps = (state) => {
