@@ -34,13 +34,6 @@ const App = (props) => {
 
   const padding = { padding: 5 }
 
-  const blogById = (id) => {
-    console.log( props.blogs.find(blog => blog.id === id))
-    return(
-      props.blogs.find(blog => blog.id === id)
-    )
-  }
-
 
   return (
     <div>
@@ -82,11 +75,7 @@ const App = (props) => {
             <div>
               <Notification/>
               <BlogSimple
-                blog={blogById(match.params.id)}
-                blogs = {props.blogs}
-                createMessage = {props.createMessage}
-                initializeBlogs = {props.initializeBlogs}
-                initializeUsers = {props.initializeUsers}
+                blogId={match.params.id}
               />
             </div>
           }/>

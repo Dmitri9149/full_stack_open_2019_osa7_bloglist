@@ -1,11 +1,19 @@
 import React from 'react'
 import blogsService from '../services/blogs'
 import usersService from '../services/users'
+import { initializeBlogs } from '../reducers/blogReducer'
+import { initializeUsers } from '../reducers/usersReducer'
+import { createMessage } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 import CommentForm from './CommentForm'
+import Comments from './Comments'
 
 
 
-const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) => {
+
+const BlogSimple = props => {
+
+  const blog = props.blogs.find(blog => blog.id === props.blogId)
 
   if(blog === undefined) {
     return (null)
@@ -20,8 +28,8 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
   }
 
   const notify = (kind , message) => {
-    createMessage( kind, message)
-    setTimeout(() => createMessage('success', null ), 5000)
+    props.createMessage( kind, message)
+    setTimeout(() => props.createMessage('success', null ), 5000)
   }
 
   const deleteBlogOf = async () => {
@@ -34,8 +42,8 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
         const renewedUsers = await usersService.getAll()
         console.log(renewedBlogs)
         console.log(renewedUsers)
-        initializeBlogs(renewedBlogs)
-        initializeUsers(renewedUsers)
+        props.initializeBlogs(renewedBlogs)
+        props.initializeUsers(renewedUsers)
         notify('success','the blog is deleted')
       }
     } catch (exception) {
@@ -59,7 +67,7 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
       await blogsService.update(id, changedBlog)
       const renewedBlogs = await blogsService.getAll()
       console.log('renewedBlogs', renewedBlogs)
-      initializeBlogs(renewedBlogs)
+      props.initializeBlogs(renewedBlogs)
     } catch (exception) {
       notify('error','something is wrong with updates due to likes handling')
     }
@@ -91,17 +99,33 @@ const BlogSimple = ({ blog, createMessage, initializeBlogs, initializeUsers  }) 
               &ensp;
           <button  onClick = {() => deleteBlogOf(blog.id)}>remove</button>
         </p>
-        <ul>
-          {blog.comments.map(com => <li key = {com.id}>{com}</li>)}
-        </ul>
         <hr />
         <CommentForm blog={blog}/>
         <hr />
+        <Comments blog = {blog}/>
+        <hr/>
       </div>
 
     </div>
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    blogs: state.blogs,
+    user: state.user,
+  }
+}
 
-export default BlogSimple
+const mapDispatchToProps = {
+  initializeBlogs,
+  initializeUsers,
+  createMessage
+}
+
+
+// eksportoidaan suoraan connectin palauttama komponentti
+export default connect(mapStateToProps,
+  mapDispatchToProps
+)(BlogSimple)
+
