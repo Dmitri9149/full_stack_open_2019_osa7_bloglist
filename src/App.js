@@ -17,6 +17,8 @@ import usersService from './services/users'
 import { initializeUsers } from './reducers/usersReducer'
 import { createMessage } from './reducers/notificationReducer'
 import BlogSimple from './components/BlogSimple'
+import { Menu, Container } from 'semantic-ui-react'
+
 
 
 
@@ -36,80 +38,87 @@ const App = (props) => {
 
 
   return (
-    <div>
-      <Router>
-        <div>
+    <Container>
+      <div>
+        <Router>
           <div>
-            <Link style={padding} to="/">home</Link>
-            <Link style={padding} to="/blogs">blogs</Link>
-            <Link style={padding} to="/users">users</Link>
-            {props.user
-              ? <em> {props.user.name} logged in </em>
-              : <Link to="/login">login</Link>
+            <Menu inverted>
+              <Menu.Item link>
+                <Link style={padding} to="/">home</Link>
+              </Menu.Item>
+              <Menu.Item link>
+                <Link style={padding} to="/blogs">blogs</Link>
+              </Menu.Item>
+              <Menu.Item link>
+                <Link style={padding} to="/users">users</Link>
+                {props.user
+                  ? <em> {props.user.name} logged in </em>
+                  : <Link to="/login">login</Link>
+                }
+              </Menu.Item>
+              <Menu.Item link>
+                <Link style={padding} to="/logout">logout</Link>
+              </Menu.Item>
+            </Menu>
+
+            <Route exact path="/" render={() =>
+              <div>
+                <h2>Log in to or continue with the application</h2>
+              </div>
+            }/>
+
+            <Route exact path="/blogs" render={() =>
+              props.user
+                ?
+                <div>
+                  <h2>New Blog</h2>
+                  <Notification/>
+                  <Togglable buttonLabel="new blog">
+                    <BlogForm />
+                  </Togglable>
+                  <Blogs />
+                </div>
+                :<Redirect to="/login" />
+            } />
+
+            <Route path="/blogs/:id" render={({ match }) =>
+              <div>
+                <Notification/>
+                <BlogSimple blogId={match.params.id} />
+              </div>
+            }/>
+
+            <Route path="/users" render={() =>
+              props.user
+                ?
+                <div>
+                  <h2>blogs</h2>
+                  <Notification/>
+                  <Users/>
+                </div>
+                : <Redirect to="/login" />
+            } />
+
+            <Route path="/login" render={() =>
+              <div>
+                <Notification/>
+                <LoginForm/>
+              </div>
             }
-            <Link style={padding} to="/logout">logout</Link>
+            />
+
+            <Route path="/logout" render={() =>
+              props.user
+                ?
+                <div>
+                  <Logout/>
+                </div>
+                :<Redirect to="/" />
+            } />
           </div>
-
-          <Route exact path="/" render={() =>
-            <div>
-              <h2>Log in to or continue with the application</h2>
-            </div>
-          }/>
-
-          <Route exact path="/blogs" render={() =>
-            props.user
-              ?
-              <div>
-                <h2>New Blog</h2>
-                <Notification/>
-                <Togglable buttonLabel="new blog">
-                  <BlogForm />
-                </Togglable>
-                <Blogs />
-              </div>
-              :<Redirect to="/login" />
-
-          } />
-
-          <Route path="/blogs/:id" render={({ match }) =>
-
-            <div>
-              <Notification/>
-              <BlogSimple blogId={match.params.id} />
-            </div>
-          }/>
-
-          <Route path="/users" render={() =>
-            props.user
-              ?
-              <div>
-                <h2>blogs</h2>
-                <Notification/>
-                <Users/>
-              </div>
-
-              : <Redirect to="/login" />
-          } />
-
-          <Route path="/login" render={() =>
-            <div>
-              <Notification/>
-              <LoginForm/>
-            </div>
-          }
-          />
-
-          <Route path="/logout" render={() =>
-            props.user
-              ?
-              <div>
-                <Logout/>
-              </div>
-              :<Redirect to="/" />
-          } />
-        </div>
-      </Router>
-    </div>
+        </Router>
+      </div>
+    </Container>
   )
 }
 
