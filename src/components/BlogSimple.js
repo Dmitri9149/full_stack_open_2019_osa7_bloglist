@@ -102,10 +102,8 @@ const BlogSimple = ({ blogs, blog, createMessage, initializeBlogs, initializeUse
         </div>
         <div>
           <ul>
-            {blog.comments.map(comment =>
-              <li key = {comment._id}>
-                {comment.content}
-              </li>
+            {blog.comments.map(com =>
+              <li key = {com.id}>{com}</li>
             )}
           </ul>
         </div>
