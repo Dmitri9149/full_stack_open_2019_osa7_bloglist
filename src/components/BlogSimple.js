@@ -96,7 +96,7 @@ const BlogSimpleNoHist = props => {
           &ensp;
           added by
           &ensp;
-          {blog.user.name} {props.user.name}
+          {blog.user.name}
           &ensp;
         </p>
         <p>
