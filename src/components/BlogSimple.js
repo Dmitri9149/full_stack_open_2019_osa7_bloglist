@@ -96,12 +96,16 @@ const BlogSimpleNoHist = props => {
           &ensp;
           added by
           &ensp;
-          {blog.user.name}
+          {blog.user.name} {props.user.name}
           &ensp;
         </p>
         <p>
           &ensp;
-          <button  onClick = {() => deleteBlogOf(blog.id)}>remove</button>
+          {
+            blog.user.name === props.user.name
+              ? <Button  onClick = {() => deleteBlogOf(blog.id)}>remove</Button>
+              :null
+          }
         </p>
         <div>
           <hr />
