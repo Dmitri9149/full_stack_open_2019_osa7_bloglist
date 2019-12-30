@@ -26,7 +26,7 @@ const CommentForm = (props) => {
     try {
       event.preventDefault()
 
-      const changedBlog = { ... blog,
+      const changedBlog = { ...blog,
         comments: [...blog.comments, newComment.value]
       }
 
