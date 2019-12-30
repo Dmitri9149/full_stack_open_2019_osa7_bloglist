@@ -3,6 +3,7 @@ import  { useField } from '../hooks/index'
 import { setNull } from '../reducers/userReducer'
 import blogsService from '../services/blogs'
 import { connect } from 'react-redux'
+import { Button } from 'semantic-ui-react'
 
 
 
@@ -19,7 +20,7 @@ const Logout = (props) => {
 
     <div>
       <p>{user.name} logged in</p>
-      <button onClick = {() => {
+      <Button onClick = {() => {
         props.setNull()
         username.reset()
         password.reset()
@@ -27,7 +28,7 @@ const Logout = (props) => {
       }}
       >
         logout
-      </button>
+      </Button>
     </div>
   )
 }

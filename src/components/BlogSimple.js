@@ -8,7 +8,7 @@ import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import CommentForm from './CommentForm'
 import BlogComments from './BlogComments'
-import {Header, Button } from 'semantic-ui-react'
+import { Header, Button } from 'semantic-ui-react'
 
 
 
