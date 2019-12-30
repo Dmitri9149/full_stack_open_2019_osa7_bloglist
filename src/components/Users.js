@@ -29,7 +29,7 @@ const Users = (props) => {
     <div style = {blogStyle}>
       <div style = {showPartly}>
         <div>
-          <h2> Users </h2>
+          <Header as = 'h2' dividing>Users</Header>
           <Table striped celled>
             <Table.Body>
               <Table.Row>
@@ -39,20 +39,16 @@ const Users = (props) => {
               </Table.Row>
               {props.users.map(user =>
                 <Table.Row key = { user.id}>
-                  <Table.Cell>
-                    <li key ={user.id}  onClick={() =>
-                    {
-                      props.setUserOfInterest(user)
-                      return(setLoginVisible(false))
-                    }
-                    }>
-                      {user.name}
-                    </li>
+                  <Table.Cell onClick={() =>
+                  {
+                    props.setUserOfInterest(user)
+                    return(setLoginVisible(false))
+                  }
+                  }>
+                    {user.name}
                   </Table.Cell>
                   <Table.Cell>
-                    <li key ={user.id} >
-                      {user.blogs.length}
-                    </li>
+                    {user.blogs.length}
                   </Table.Cell>
                 </Table.Row>
               )
@@ -69,13 +65,13 @@ const Users = (props) => {
           return(setLoginVisible(true))
         }
         }>
-          <h2>
+          <Header as =  'h2' dividing>
             {console.log('Users user ', props.userOfInterest)}
             {props.userOfInterest === null ? '' : props.userOfInterest.name}
-          </h2>
-          <h4>
+          </Header>
+          <Header as = 'h4' dividing>
             added blogs
-          </h4>
+          </Header>
           {
             props.userOfInterest === null
               ? ''
