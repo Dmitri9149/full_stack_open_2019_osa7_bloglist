@@ -26,12 +26,12 @@ const App = (props) => {
   useEffect(() => {
     blogsService
       .getAll().then(blogs => props.initializeBlogs(blogs))
-  },[props])
+  },[])
 
   useEffect(() => {
     usersService
       .getAll().then(users => props.initializeUsers(users))
-  },[props])
+  },[])
 
 
   const padding = { padding: 5 }
