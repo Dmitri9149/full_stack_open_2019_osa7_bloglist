@@ -1,18 +1,19 @@
 import React from 'react'
 import blogsService from '../services/blogs'
 import usersService from '../services/users'
+import { withRouter } from 'react-router-dom'
 import { initializeBlogs } from '../reducers/blogReducer'
 import { initializeUsers } from '../reducers/usersReducer'
 import { createMessage } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import CommentForm from './CommentForm'
 import BlogComments from './BlogComments'
-import { Grid, Header, Button } from 'semantic-ui-react'
+import {Header, Button } from 'semantic-ui-react'
 
 
 
 
-const BlogSimple = props => {
+const BlogSimpleNoHist = props => {
 
   const blog = props.blogs.find(blog => blog.id === props.blogId)
 
@@ -46,6 +47,7 @@ const BlogSimple = props => {
         props.initializeBlogs(renewedBlogs)
         props.initializeUsers(renewedUsers)
         notify('success','the blog is deleted')
+        props.history.push('/')
       }
     } catch (exception) {
       notify('error', 'something is wrong with deliting of the blog')
@@ -82,37 +84,34 @@ const BlogSimple = props => {
       <div>{ blog.url}</div>
 
       <div>
-        <Grid columns = {3}>
-          <Grid.Row>
-            <Grid.Column>
-              {blog.likes}
-            </Grid.Column>
-            <Grid.Column>
-              likes
-            </Grid.Column>
-            <Grid.Column>
-              <Button onClick = {() => handleLikesOf(blog)}>like</Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
         <p>
-              &ensp;
-              added by
-              &ensp;
-          {blog.user.name}
-              &ensp;
+          &ensp;
+          {blog.likes}
+          &ensp;
+          Likes
+          &ensp;
+          <Button onClick = {() => handleLikesOf(blog)}>like</Button>
         </p>
         <p>
-              &ensp;
+          &ensp;
+          added by
+          &ensp;
+          {blog.user.name}
+          &ensp;
+        </p>
+        <p>
+          &ensp;
           <button  onClick = {() => deleteBlogOf(blog.id)}>remove</button>
         </p>
-        <hr />
-        <CommentForm blog={blog}/>
-        <hr />
-        <BlogComments blog = {blog}/>
-        <hr/>
-      </div>
+        <div>
+          <hr />
+          <CommentForm blog={blog}/>
+          <hr />
+          <BlogComments blog = {blog}/>
+          <hr/>
+        </div>
 
+      </div>
     </div>
   )
 }
@@ -132,6 +131,7 @@ const mapDispatchToProps = {
 
 
 // eksportoidaan suoraan connectin palauttama komponentti
+const BlogSimple = withRouter(BlogSimpleNoHist)
 export default connect(mapStateToProps,
   mapDispatchToProps
 )(BlogSimple)
