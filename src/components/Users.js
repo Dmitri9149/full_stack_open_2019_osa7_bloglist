@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Table, Header } from 'semantic-ui-react'
 import { setUserOfInterest, setNullOfInterest   } from '../reducers/userOfInterestReducer'
 
 
@@ -29,38 +30,35 @@ const Users = (props) => {
       <div style = {showPartly}>
         <div>
           <h2> Users </h2>
-          <table>
-            <tbody>
-              <tr>
-                <th>
-                </th>
-                <th>
+          <Table striped celled>
+            <Table.Body>
+              <Table.Row>
+                <Table.Cell>
               blogs created
-                </th>
-              </tr>
-              {
-                props.users.map(user =>
-                  <tr key = { user.id}>
-                    <td>
-                      <li key ={user.id}  onClick={() =>
-                      {
-                        props.setUserOfInterest(user)
-                        return(setLoginVisible(false))
-                      }
-                      }>
-                        {user.name}
-                      </li>
-                    </td>
-                    <td>
-                      <li key ={user.id} >
-                        {user.blogs.length}
-                      </li>
-                    </td>
-                  </tr>
-                )
+                </Table.Cell>
+              </Table.Row>
+              {props.users.map(user =>
+                <Table.Row key = { user.id}>
+                  <Table.Cell>
+                    <li key ={user.id}  onClick={() =>
+                    {
+                      props.setUserOfInterest(user)
+                      return(setLoginVisible(false))
+                    }
+                    }>
+                      {user.name}
+                    </li>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <li key ={user.id} >
+                      {user.blogs.length}
+                    </li>
+                  </Table.Cell>
+                </Table.Row>
+              )
               }
-            </tbody>
-          </table>
+            </Table.Body>
+          </Table>
         </div>
       </div>
 
